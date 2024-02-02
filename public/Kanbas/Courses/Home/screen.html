@@ -1,9 +1,11 @@
 <html>
     <head>
-        <link rel="stylesheet" href="/Kanbas/styles.css"/>
-        <link rel="stylesheet" href="/Kanbas/Navigation/index.css"/>
-        <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css"/>
-        <link rel="stylesheet" href="/Kanbas/Courses/Navigation/index.css"/>
+        <link rel="stylesheet" href="/libs/bootstrap/bootstrap.min.css" />
+        <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="/Kanbas/styles.css" />
+        <link rel="stylesheet" href="/Kanbas/Navigation/index.css" />
+        <link rel="stylesheet" href="/Kanbas/Courses/Navigation/index.css" />
+        <link rel="stylesheet" href="/Kanbas/Courses/Home/index.css" />
     </head>
     <body>
     <table width="100%">
@@ -25,8 +27,8 @@
                 </td>
                 <td valign="top">
                     <ul class="wd-navigation">
-                        <li class="wd-active"><a href="/Kanbas/Courses/Home/screen.html">Home</a></li>
-                        <li><a href="#">Modules</a></li>
+                        <li><a href="/Kanbas/Courses/Home/screen.html">Home</a></li>
+                        <li class="wd-active"><a href="/Kanbas/Courses/Home/screen.html">Modules</a></li>
                         <li><a href="http://piazza.com">Piazza</a></li>
                         <li><a href="#">Zoom</a></li>
                         <li><a href="/Kanbas/Courses/Assignments/screen.html">Assignments</a></li>
@@ -60,44 +62,62 @@
                                     </select>
                                     <button>Module</button>
             
-                                    <ul>
-                                        <li>Week 0 - Intro</li>
-                                        <ul>
-                                            <li>Learning Objectives</li>
-                                            <ul>
-                                                <li>Introduction to the course</li>
-                                                <li>Learning what Web Dev is</li>
-                                                <li>Creating your environment</li>
-                                                <li>Creating a Web App</li>
-                                                <li>Starting Assignment 1</li>
-                                            </ul>
-                                            <li>Reading</li>
-                                            <ul>
-                                                <li>Full Stack Developer - Ch. 1</li>
-                                                <li>Full Stack Developer - Ch. 2</li>
-                                            </ul>
-                                            <li>Slides</li>
-                                            <ul>
-                                                <li><a href="#">Introduction to Web Dev</a></li>
-                                                <li><a href="#">Creating an HTTP server with Node.js</a></li>
-                                                <li><a href="#">Creating a React Application</a></li>
-                                            </ul>
-                                        </ul>
-                                        <li>Week 1 - HTML</li>
-                                        <ul>
-                                            <li>Learning Objectives</li>
-                                            <ul>
-                                                <li>Learn how to create user interfaces using HTML</li>
-                                                <li>Continue working on A1</li>
-                                                <li>Deploy the assignment to Netlify</li>
-                                            </ul>
-                                            <li>Reading</li>
-                                            <ul>
-                                                <li>Full Stack Developer - Ch. 2</li>
-                                                <li>Full Stack Developer - Ch. 3</li>
-                                            </ul>
-                                        </ul>
-                                    </ul>
+                                    <ul class="list-group wd-modules">
+                                        <li class="list-group-item">
+                                          <div>
+                                            <i class="fa fa-ellipsis-v"></i> Week 1
+                                            <span class="float-end">
+                                              <i class="fa fa-check-circle text-success"></i>
+                                              <i class="fa fa-plus ms-2"></i>
+                                              <i class="fa fa-ellipsis-v ms-2"></i>
+                                            </span>
+                                          </div>
+                                          <ul class="list-group">
+                                            <li class="list-group-item">
+                                              <i class="fa fa-ellipsis-v"></i> Learning Objectives
+                                              <span class="float-end">
+                                                <i class="fa fa-check-circle text-success"></i>
+                                                <i class="fa fa-ellipsis-v ms-2"></i>
+                                              </span>
+                                            </li>
+                                            
+                                            <li class="list-group-item">
+                                              <i class="fa fa-ellipsis-v"></i> Reading
+                                              <span class="float-end">
+                                                <i class="fa fa-check-circle text-success"></i>
+                                                <i class="fa fa-ellipsis-v ms-2"></i>
+                                              </span>
+                                            </li>
+                                          </ul>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <div>
+                                            <i class="fa fa-ellipsis-v"></i> Week 2
+                                            <span class="float-end">
+                                              <i class="fa fa-check-circle text-success"></i>
+                                              <i class="fa fa-plus ms-2"></i>
+                                              <i class="fa fa-ellipsis-v ms-2"></i>
+                                            </span>
+                                          </div>
+                                  
+                                          <ul class="list-group">
+                                              <li class="list-group-item">
+                                                <i class="fa fa-ellipsis-v"></i> Learning Objectives
+                                                <span class="float-end">
+                                                  <i class="fa fa-check-circle text-success"></i>
+                                                  <i class="fa fa-ellipsis-v ms-2"></i>
+                                                </span>
+                                              </li>
+                                              
+                                              <li class="list-group-item">
+                                                <i class="fa fa-ellipsis-v"></i> Reading
+                                                <span class="float-end">
+                                                  <i class="fa fa-check-circle text-success"></i>
+                                                  <i class="fa fa-ellipsis-v ms-2"></i>
+                                                </span>
+                                              </li>
+                                        </li>
+                                      </ul>
                                 </td>
                                 <td valign="top">
                                     <h2>Course Status</h2>
