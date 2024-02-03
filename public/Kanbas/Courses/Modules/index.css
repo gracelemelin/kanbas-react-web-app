@@ -14,6 +14,7 @@
   background-color: lightgray;
   border: 1px solid gray !important;
   border-left: none !important;
+  margin-bottom: 50px;
 }
 
 .wd-modules > li > div {
@@ -27,6 +28,6 @@
   border-left: 2px solid green;
 }
 
-.wd-modules > li {
-  margin-bottom: 20px;
+.button {
+  border-radius: 4px;
 }
