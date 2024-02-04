@@ -9,6 +9,43 @@
   <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.css" />
 </head>
 <body>
+
+  <div class="d-block d-md-none">
+    <nav
+      class="navbar bg-dark border-bottom border-body"
+      data-bs-theme="dark"
+    >
+      <div class="container-fluid">
+        <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+        <a class="navbar-brand" href="#">Navbar</a>
+
+        <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggler="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="fa fa-chevron-down"></span>
+      </button>
+      </div>
+    </nav>
+  </div>
+
   <div class="d-flex">
     <div class="d-none d-md-block">
       <ul class="wd-kanbas-navigation">
@@ -116,35 +153,32 @@
       </ul>
     </div>
 
-    <div class="flex-grow-0 me-2 d-none d-lg-block" style="width: 250px;">
+    <div class="flex-grow-0 me-2 d-none d-xl-block" style="width: 225px;">
       <h2>Course Status</h2>
-      <table>
-        <tbody>
-          <tr>
-            <td valign="top">
-              <button>Unpublish</button>
-              <button>Published</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
 
-      <ul>
-        <li><a href="#">Import Existing Content</a></li>
-        <li><a href="#">Import from Commons</a></li>
-        <li><a href="#">Choose Home Page</a></li>
-        <li><a href="#">View Course Stream</a></li>
-        <li><a href="#">New Announcement</a></li>
-        <li><a href="#">New Analytics</a></li>
-        <li><a href="#">View Course Notifications</a></li>
-      </ul>
+      <div class="btn-group" role="group" style="padding-bottom: 10px;">
+        <button type="button" class="btn btn-outline-dark">Unpublish</button>
+        <button type="button" class="btn btn-outline-dark">Published</button>
+      </div>
 
-      <h2>Coming Up</h2>
-      <a href="#">View Calendar</a>
-      <ul>
-        <li><a href="#">Lecture CS4550 Sep 7 at 11:45am</a></li>
-        <li><a href="#">Lecture CS4550 Sep 11 at 11:45am</a></li>
-      </ul>
+      <div class="btn-group-vertical" style="padding-bottom: 10px;">
+        <button type="button" class="btn btn-outline-secondary">Import Existing Content</button>
+        <button type="button" class="btn btn-outline-secondary">Import from Commons</button>
+        <button type="button" class="btn btn-outline-secondary">Choose Home Page</button>
+        <button type="button" class="btn btn-outline-secondary">View Course Stream</button>
+        <button type="button" class="btn btn-outline-secondary">New Announcement</button>
+        <button type="button" class="btn btn-outline-secondary">New Analytics</button>
+        <button type="button" class="btn btn-outline-secondary">View Course Notifications</button>
+      </div>
+
+      <div>
+        <h2>Coming Up</h2>
+        <a href="#" style="color: red;">View Calendar</a>
+        <ul class="wd-navigation">
+          <li><a href="#">Lecture CS4550 Sep 7 at 11:45am</a></li>
+          <li><a href="#">Lecture CS4550 Sep 11 at 11:45am</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 </body>
