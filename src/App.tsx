@@ -1,14 +1,16 @@
 import React from 'react';
 import logo from './logo.svg';
-// import './App.css';
+import './App.css';
+import Labs from "./Labs";
+import HelloWorld from "./Labs/a3/HelloWorld";
+import Kanbas from "./Kanbas";
 
 function App() {
   return (
     <>
-      <h1>Labs</h1>
-      <h2>Assignment3</h2>
-      <h1>Kanbas</h1>
-      <h1>Hello World</h1>
+    <Labs/>
+    <Kanbas/>
+    <HelloWorld/>
     </>
 
   );
