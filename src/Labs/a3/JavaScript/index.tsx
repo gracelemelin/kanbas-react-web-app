@@ -3,10 +3,14 @@ import VariableTypes from "./variables/VariableTypes";
 import BooleanVariables from "./variables/BooleanVariables";
 import IfElse from "./conditionals/IfElse";
 import TernaryOperator from "./conditionals/TernaryOperator";
-import ES5Functions from "./functions/ES5Functions";
-import ArrowFunctions from "./functions/ArrowFunctions";
-import ImpliedReturn from "./functions/ImpliedReturn";
-import ParenthesisAndParameters from "./functions/FunctionParenthesisAndParameters";
+import WorkingWithFunctions from "./functions/WorkingWithFunctions";
+import WorkingWithArrays from "./arrays/WorkingWithArrays";
+import JsonStringify from "./json/JsonStringify";
+import TemplateLiterals from "./string/TemplateLiterals";
+import House from "./json/Home";
+import Spreading from "./json/Spreading";
+import Destructing from "./json/Destructing";
+import FunctionDestructing from "./functions/FunctionDestructing";
 
 function JavaScript() {
     console.log('Hello World!');
@@ -18,10 +22,14 @@ function JavaScript() {
             <BooleanVariables/>
             <IfElse/>
             <TernaryOperator/>
-            <ES5Functions/>
-            <ArrowFunctions/>
-            <ImpliedReturn/>
-            <ParenthesisAndParameters/>
+            <WorkingWithFunctions/>
+            <WorkingWithArrays/>
+            <JsonStringify/>
+            <TemplateLiterals/>
+            <House/>
+            <Spreading/>
+            <Destructing/>
+            <FunctionDestructing/>
         </div>
     );
 }
