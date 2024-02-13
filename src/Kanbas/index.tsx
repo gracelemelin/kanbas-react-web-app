@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Nav from "../Nav";
 import KanbasNavigation from "./Navigation";
+import Dashboard from "./Dashboard";
 
 function Kanbas() {
     return (
@@ -10,7 +11,7 @@ function Kanbas() {
             </div>
             <div style={{flexGrow: 1}}>
                 <h1>Account</h1>
-                <h1>Dashboard</h1>
+                <Dashboard/>
                 <h1>Courses</h1>
             </div>
 
