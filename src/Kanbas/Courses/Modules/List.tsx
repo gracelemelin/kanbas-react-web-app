@@ -8,8 +8,32 @@ function ModuleList() {
   const modulesList = modules.filter((module) => module.course === courseId);
   const [selectedModule, setSelectedModule] = useState(modulesList[0]);
   return (
-    <>
-      {/* <!-- Add buttons here --> */}
+    <div>
+
+      <div className="flex-row-container d-none d-md-block">
+        <div className="col ps-4">
+
+          <a href="#"><i className="fa fa-bars fa-lg" style={{ color: "red", float: "left" }}></i></a>
+          <nav aria-label="breadcrumb">
+
+            <ol className="breadcrumb">
+              <li className="breadcrumb-item"><span style={{ color: "red" }}>{courseId}</span></li>
+              <li className="breadcrumb-item active" aria-current="page">Modules</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+
+      <button className="button">Collapse All</button>
+      <button className="button">View Progress</button>
+      <select>
+        <option>Publish All</option>
+        <option>Publish All Modules and Items</option>
+        <option>Publish Modules Only</option>
+        <option>Unpublish All Modules</option>
+      </select>
+      <button className="button ms-1" style={{ color: "white", backgroundColor: "red" }}>+ Module</button>
+      <button className="float-end" style={{ borderRadius: "4px" }}><i className="fa fa-binoculars"></i> Student View</button>
       <ul className="list-group wd-modules">
         {modulesList.map((module) => (
           <li
@@ -41,7 +65,7 @@ function ModuleList() {
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }
 export default ModuleList;
