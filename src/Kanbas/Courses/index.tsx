@@ -8,21 +8,34 @@ import Assignments from "./Assignments";
 
 function Courses() {
   const { courseId } = useParams();
+  const loc = window.location.href;
   const course = courses.find((course) => course._id === courseId);
+  const l = loc?.substring(loc.lastIndexOf('/') + 1);
   return (
     <div>
-      <h1 className="ps-3"><HiMiniBars3 /> Course {course?.name} {courseId}</h1>
-      <CourseNavigation/>
+      <div className="flex-row-container d-none d-md-block">
+        <div className="col ps-4 pt-1">
+          <nav aria-label="breadcrumb">
+            <h1>
+              <p>
+                <HiMiniBars3 /><span className="ps-3" style={{ color: "red" }}>Course {course?.name} {courseId}</span> <span style={{ color: "darkgray" }}> {">"} </span> {l}
+              </p>
+            </h1>
+          </nav>
+        </div>
+      </div>
+      <p className="ps-3" style={{color: "gray"}}>{courseId}</p>
+      <CourseNavigation />
       <div>
         <div
           className="overflow-y-scroll position-fixed bottom-0 end-0"
           style={{ left: "200px", top: "50px" }} >
           <Routes>
             <Route path="/" element={<Navigate to="Home" />} />
-            <Route path="Home" element={<Home/>} />
-            <Route path="Modules" element={<Modules/>} />
+            <Route path="Home" element={<Home />} />
+            <Route path="Modules" element={<Modules />} />
             <Route path="Piazza" element={<h1>Piazza</h1>} />
-            <Route path="Assignments" element={<Assignments/>} />
+            <Route path="Assignments" element={<Assignments />} />
             <Route path="Assignments/:assignmentId" element={<h1>Assignment Editor</h1>} />
             <Route path="Grades" element={<h1>Grades</h1>} />
           </Routes>

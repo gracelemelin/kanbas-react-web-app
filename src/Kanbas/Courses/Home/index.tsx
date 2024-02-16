@@ -13,7 +13,6 @@ function Home() {
       <div className="row">
 
         <div className="col-9">
-          <h2>Home</h2>
           <ModuleList />
         </div>
 
@@ -27,7 +26,7 @@ function Home() {
               style={{ color: "green" }}></i> Published</button>
           </div>
 
-          <div className="btn-group-vertical" style={{ paddingBottom: "10px" }}>
+          <div className="btn-group-vertical" style={{ paddingBottom: "15px" }}>
             <button type="button" className="btn btn-outline-secondary" style={{ textAlign: "left" }}><i className="fa fa-sign-in"
               aria-hidden="true"></i> Import Existing Content</button>
             <button type="button" className="btn btn-outline-secondary" style={{ textAlign: "left" }}><i className="fa fa-upload"
@@ -44,18 +43,19 @@ function Home() {
               aria-hidden="true"></i> View Course Notifications</button>
           </div>
 
-          <div style={{ paddingBottom: "15px" }}>
+          <div style={{ paddingBottom: "20px" }}>
             <h4>To Do</h4>
-
-            <a href="#" style={{ color: "red", textDecoration: "none" }}><i className="fa fa-list-ol" aria-hidden="true"></i> Grade
-              A1</a>
+            <hr/>
+            <Link to="#" style={{ color: "red", textDecoration: "none" }}><i className="fa fa-list-ol" aria-hidden="true"></i> Grade
+              A1</Link>
             <br />
-            <a href="#" style={{ color: "red", textDecoration: "none" }}><i className="fa fa-list-ol" aria-hidden="true"></i> Grade
-              Quiz 1</a>
+            <Link to="#" style={{ color: "red", textDecoration: "none" }}><i className="fa fa-list-ol" aria-hidden="true"></i> Grade
+              Quiz 1</Link>
           </div>
 
           <div>
             <h4>Coming Up</h4>
+            <hr/>
             <FaRegCalendarAlt />
             <Link to="#" style={{ color: "red" }}> View Calendar</Link>
 

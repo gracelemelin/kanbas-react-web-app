@@ -8,22 +8,8 @@ function ModuleList() {
   const modulesList = modules.filter((module) => module.course === courseId);
   const [selectedModule, setSelectedModule] = useState(modulesList[0]);
   return (
-    <div>
-
-      <div className="flex-row-container d-none d-md-block">
-        <div className="col ps-4">
-
-          <a href="#"><i className="fa fa-bars fa-lg" style={{ color: "red", float: "left" }}></i></a>
-          <nav aria-label="breadcrumb">
-
-            <ol className="breadcrumb">
-              <li className="breadcrumb-item"><span style={{ color: "red" }}>{courseId}</span></li>
-              <li className="breadcrumb-item active" aria-current="page">Modules</li>
-            </ol>
-          </nav>
-        </div>
-      </div>
-
+    <div className="ps-1 pe-1 pt-2">
+      <hr/>
       <button className="button">Collapse All</button>
       <button className="button">View Progress</button>
       <select>
