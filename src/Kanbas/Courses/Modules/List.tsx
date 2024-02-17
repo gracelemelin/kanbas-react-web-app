@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import "./index.css";
 import { modules } from "../../Database";
-import { FaEllipsisV, FaCheckCircle, FaPlusCircle } from "react-icons/fa";
+import { FaEllipsisV, FaCheckCircle, FaPlusCircle, FaGlasses } from "react-icons/fa";
 import { useParams } from "react-router";
 function ModuleList() {
   const { courseId } = useParams();
   const modulesList = modules.filter((module) => module.course === courseId);
   const [selectedModule, setSelectedModule] = useState(modulesList[0]);
   return (
-    <div className="ps-1 pe-1 pt-2">
-      <hr/>
+    <div className="ps-1 pe-2 pt-5">
       <button className="button">Collapse All</button>
       <button className="button">View Progress</button>
       <select>
@@ -19,7 +18,9 @@ function ModuleList() {
         <option>Unpublish All Modules</option>
       </select>
       <button className="button ms-1" style={{ color: "white", backgroundColor: "red" }}>+ Module</button>
-      <button className="float-end" style={{ borderRadius: "4px" }}><i className="fa fa-binoculars"></i> Student View</button>
+      <FaEllipsisV />
+      <button className="float-end" style={{ borderRadius: "4px" }}><FaGlasses/> Student View</button>
+      <hr/>
       <ul className="list-group wd-modules">
         {modulesList.map((module) => (
           <li

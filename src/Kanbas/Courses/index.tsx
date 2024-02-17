@@ -18,11 +18,12 @@ function Courses() {
           <nav aria-label="breadcrumb">
             <h1>
               <p>
-                <HiMiniBars3 /><span className="ps-3" style={{ color: "red" }}>Course {course?.name} {courseId}</span> <span style={{ color: "darkgray" }}> {">"} </span> {l}
+                <HiMiniBars3 /><span className="ps-3" style={{ color: "red" }}>Course: {course?.name} {courseId}</span> <span style={{ color: "darkgray" }}> {">"} </span> {l}
               </p>
             </h1>
           </nav>
         </div>
+        <hr/>
       </div>
       <p className="ps-3" style={{color: "gray"}}>{courseId}</p>
       <CourseNavigation />

@@ -7,13 +7,22 @@ function Assignments() {
   const assignmentList = assignments.filter(
     (assignment) => assignment.course === courseId);
   return (
-    <>
-      {/* <!-- Add buttons and other fields here --> */}
+    <div className="ps-1 pe-2 pt-5">
+      <div>
+        <input type="text" placeholder="Search for Assignment"/>
+        <div className="float-end">
+          <button className="m-1" style={{borderRadius: "4px"}}>+Group</button>
+          <button style={{borderRadius: "4px", color: "white", backgroundColor: "red"}}>+Assignment</button>
+          <FaEllipsisV className="ms-2"/>
+        </div>
+        <hr/>
+      </div>
       <ul className="list-group wd-modules">
         <li className="list-group-item">
           <div>
             <FaEllipsisV className="me-2" /> ASSIGNMENTS
             <span className="float-end">
+              <span className="me-2 p-1" style={{borderStyle: "solid", borderRadius: "20px", borderColor: "gray"}}>40% of Total</span>
               <FaCheckCircle className="text-success" />
               <FaPlusCircle className="ms-2" /><FaEllipsisV className="ms-2" />
             </span>
@@ -30,6 +39,6 @@ function Assignments() {
           </ul>
         </li>
       </ul>
-    </>
+    </div>
 );}
 export default Assignments;
