@@ -15,6 +15,17 @@ function Home() {
   return (
     <div className="container-fluid">
 
+      <div className="d-block d-md-none">
+        <nav className="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+          {/* <script>
+            const {navLinks} = document.getElementById("navLinks");
+          </script> */}
+        </nav>
+
+
+      </div>
+
+
       <div className="row">
 
         <div className="col-9">
@@ -25,31 +36,31 @@ function Home() {
           <h4>Course Status</h4>
 
           <div className="btn-group" role="group" style={{ paddingBottom: "10px" }}>
-            <button type="button" className="btn btn-outline-dark"><GoXCircle/>Unpublish</button>
-            <button type="button" className="btn btn-outline-dark" style={{ color: "green" }}><CiCircleCheck style={{ color: "green" }}/>Published</button>
+            <button type="button" className="btn btn-outline-dark"><GoXCircle />Unpublish</button>
+            <button type="button" className="btn btn-outline-dark" style={{ color: "green" }}><CiCircleCheck style={{ color: "green" }} />Published</button>
           </div>
 
           <div className="btn-group-vertical" style={{ paddingBottom: "15px" }}>
-            <button type="button" className="btn btn-outline-secondary" style={{ textAlign: "left" }}><CiImport/> Import Existing Content</button>
-            <button type="button" className="btn btn-outline-secondary" style={{ textAlign: "left" }}><LuImport/> Import from Commons</button>
-            <button type="button" className="btn btn-outline-secondary" style={{ textAlign: "left" }}><LuTarget/> Choose Home Page</button>
-            <button type="button" className="btn btn-outline-secondary" style={{ textAlign: "left" }}><FaChartBar/> View Course Stream</button>
-            <button type="button" className="btn btn-outline-secondary" style={{ textAlign: "left" }}><HiOutlineSpeakerphone/> New Announcement</button>
-            <button type="button" className="btn btn-outline-secondary" style={{ textAlign: "left" }}><LuBarChartHorizontal/> New Analytics</button>
-            <button type="button" className="btn btn-outline-secondary" style={{ textAlign: "left", whiteSpace: "nowrap" }}><CiBellOn/> View Course Notifications</button>
+            <button type="button" className="btn btn-outline-secondary" style={{ textAlign: "left" }}><CiImport /> Import Existing Content</button>
+            <button type="button" className="btn btn-outline-secondary" style={{ textAlign: "left" }}><LuImport /> Import from Commons</button>
+            <button type="button" className="btn btn-outline-secondary" style={{ textAlign: "left" }}><LuTarget /> Choose Home Page</button>
+            <button type="button" className="btn btn-outline-secondary" style={{ textAlign: "left" }}><FaChartBar /> View Course Stream</button>
+            <button type="button" className="btn btn-outline-secondary" style={{ textAlign: "left" }}><HiOutlineSpeakerphone /> New Announcement</button>
+            <button type="button" className="btn btn-outline-secondary" style={{ textAlign: "left" }}><LuBarChartHorizontal /> New Analytics</button>
+            <button type="button" className="btn btn-outline-secondary" style={{ textAlign: "left", whiteSpace: "nowrap" }}><CiBellOn /> View Course Notifications</button>
           </div>
 
           <div style={{ paddingBottom: "20px" }}>
             <h4>To Do</h4>
-            <hr/>
-            <Link to="#" style={{ color: "red", textDecoration: "none" }}><MdOutlineAssignment/> Grade A1</Link>
+            <hr />
+            <Link to="#" style={{ color: "red", textDecoration: "none" }}><MdOutlineAssignment /> Grade A1</Link>
             <br />
-            <Link to="#" style={{ color: "red", textDecoration: "none" }}><MdOutlineAssignment/> Grade Quiz 1</Link>
+            <Link to="#" style={{ color: "red", textDecoration: "none" }}><MdOutlineAssignment /> Grade Quiz 1</Link>
           </div>
 
           <div>
             <h4>Coming Up</h4>
-            <hr/>
+            <hr />
             <FaRegCalendarAlt />
             <Link to="#" style={{ color: "red" }}> View Calendar</Link>
 

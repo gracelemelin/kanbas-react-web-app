@@ -23,10 +23,12 @@ function Courses() {
             </h1>
           </nav>
         </div>
-        <hr/>
+        <hr />
       </div>
-      <p className="ps-3" style={{color: "gray"}}>{courseId}</p>
-      <CourseNavigation />
+      <p className="ps-3 d-none d-md-block" style={{ color: "gray" }}>{courseId}</p>
+      <div className="d-none d-md-block" id="navLinks">
+        <CourseNavigation />
+      </div>
       <div>
         <div
           className="overflow-y-scroll position-fixed bottom-0 end-0"
