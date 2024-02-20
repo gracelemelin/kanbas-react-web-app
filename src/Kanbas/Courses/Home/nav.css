@@ -1,0 +1,23 @@
+.wd-nav {
+    background-color: white;
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    width: 100vw;
+}
+
+.wd-nav li {
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 0.8em;
+    text-align: left;
+}
+
+.wd-nav a {
+    color: red;
+    text-decoration: none;
+}
+
+.wd-nav > li.wd-active a {
+    color: red;
+}

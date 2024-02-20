@@ -7,7 +7,7 @@ function Kanbas() {
     const {pathname} = useLocation();
     return (
         <div className="d-flex">
-            <div className={pathname.includes("Home") ? "d-none d-md-block" : ""} id="navLinks">
+            <div className={pathname.includes("Home") ? "d-none d-md-block" : ""}>
                 <KanbasNavigation />
             </div>
             <div  style={{ flexGrow: 1 }}>

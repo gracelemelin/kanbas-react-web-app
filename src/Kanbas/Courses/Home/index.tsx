@@ -1,5 +1,5 @@
 import ModuleList from "../Modules/List";
-import { FaRegCalendarAlt, FaChartBar } from "react-icons/fa";
+import { FaRegCalendarAlt, FaChartBar, FaBars, FaChevronDown } from "react-icons/fa";
 import { GoXCircle } from "react-icons/go";
 import { CiCircleCheck, CiImport, CiBellOn } from "react-icons/ci";
 import { HiOutlineSpeakerphone } from "react-icons/hi";
@@ -7,19 +7,47 @@ import { LuImport, LuTarget, LuBarChartHorizontal } from "react-icons/lu";
 import { MdOutlineAssignment } from "react-icons/md";
 import { Link, useParams } from "react-router-dom";
 import { courses } from "../../Database";
-
+import { Helmet } from "react-helmet";
+import KanbasNav from "./kanbasnav";
+import CourseNav from "./coursenav";
 
 function Home() {
   const { courseId } = useParams();
   const course = courses.find((course) => course._id === courseId);
   return (
     <div className="container-fluid">
+      <Helmet>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+      </Helmet>
 
       <div className="d-block d-md-none">
         <nav className="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
-          {/* <script>
-            const {navLinks} = document.getElementById("navLinks");
-          </script> */}
+          <p className="d-inline-flex gap-1 ps-2">
+            <button className="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#KanbasNav" aria-expanded="false" aria-controls="KanbasNav"
+            style={{background: "none", borderColor: "gray", color: "gray"}}>
+              <FaBars/>
+            </button>
+          </p>
+          <span style={{color: "white"}}>{courseId}</span>
+          <p className="d-inline-flex gap-1">
+            <button className="btn btn-primary p-0 pe-2" type="button" data-bs-toggle="collapse" data-bs-target="#CourseNav" aria-expanded="false" aria-controls="CourseNav"
+            style={{background: "none", border: "none", color: "gray"}}>
+              <FaChevronDown/>
+            </button>
+          </p>
+        
+          <div className="collapse" id="KanbasNav">
+            <div className="card card-body" style={{backgroundColor: "white"}}> 
+            <KanbasNav/>
+            </div>
+          </div>
+          
+
+          <div className="collapse" id="CourseNav">
+            <div className="card card-body" style={{backgroundColor: "white"}}>
+              <CourseNav/>
+            </div>
+          </div>
         </nav>
 
 

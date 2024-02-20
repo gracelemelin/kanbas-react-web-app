@@ -7,7 +7,7 @@ function Assignments() {
   const assignmentList = assignments.filter(
     (assignment) => assignment.course === courseId);
   return (
-    <div className="ps-1 pe-2 pt-5"
+    <div className="ps-1 pe-2 pt-2"
       style={{ left: "200px", top: "50px" }}>
       <div className="pt-5">
         <input type="text" placeholder="Search for Assignment" />

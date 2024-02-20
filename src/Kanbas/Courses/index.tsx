@@ -26,7 +26,7 @@ function Courses() {
         <hr />
       </div>
       <p className="ps-3 d-none d-md-block" style={{ color: "gray" }}>{courseId}</p>
-      <div className="d-none d-md-block" id="navLinks">
+      <div className="d-none d-md-block">
         <CourseNavigation />
       </div>
       <div>
