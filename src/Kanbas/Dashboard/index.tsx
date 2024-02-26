@@ -1,35 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { courses } from "../Database";
 
-function Dashboard() {
-  const [mycourses, setCourses] = useState(courses);
-  const [course, setCourse] = useState({
-    _id: "0", name: "New Course", number: "New Number",
-    startDate: "2023-09-10", endDate: "2023-12-15",
-    image: "reactjs.webp"
-  });
-  const addNewCourse = () => {
-    const newCourse = {
-      ...course,
-      _id: new Date().getTime().toString()
-    };
-    setCourses([...mycourses, { ...course, ...newCourse }]);
-  };
-  const deleteCourse = (courseId: string) => {
-    setCourses(courses.filter((course) => course._id !== courseId));
-  };
-  const updateCourse = () => {
-    setCourses(
-      courses.map((c) => {
-        if (c._id === course._id) {
-          return course;
-        } else {
-          return c;
-        }
-      })
-    );
-  };
+function Dashboard(
+  { mycourses, course, setCourse, addNewCourse,
+    deleteCourse, updateCourse } : {
+      mycourses: any, course: any, setCourse: any, addNewCourse: any,
+      deleteCourse: any, updateCourse: any
+    }
+) {
 
   return (
     <div className="p-4">
@@ -53,7 +31,7 @@ function Dashboard() {
       <h2>Published Courses (3)</h2> <hr />
       <div className="row">
         <div className="row row-cols-1 row-cols-md-5 g-4">
-          {mycourses.map((course) => (
+          {mycourses.map((course: any) => (
             <div key={course._id} className="col" style={{ width: 300 }}>
               <div className="card">
                 <img src={`/images/${course.image}`} className="card-img-top"
