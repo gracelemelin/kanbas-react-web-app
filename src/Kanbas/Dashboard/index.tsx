@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 
 function Dashboard(
   { mycourses, course, setCourse, addNewCourse,
-    deleteCourse, updateCourse } : {
-      mycourses: any, course: any, setCourse: any, addNewCourse: any,
-      deleteCourse: any, updateCourse: any
+    deleteCourse, updateCourse }: {
+      mycourses: any[]; course: any; setCourse: (course: any) => void;
+      addNewCourse: () => void; deleteCourse: (course: any) => void;
+      updateCourse: () => void;
     }
 ) {
 
@@ -21,12 +22,14 @@ function Dashboard(
         onChange={(e) => setCourse({ ...course, startDate: e.target.value })} />
       <input value={course.endDate} className="form-control" type="date"
         onChange={(e) => setCourse({ ...course, endDate: e.target.value })} />
-      <button onClick={addNewCourse} >
-        Add
-      </button>
-      <button onClick={updateCourse} >
-        Update
-      </button>
+      <div className="pt-2">
+        <button onClick={addNewCourse} style={{ borderRadius: "4px", backgroundColor: "green", color: "white" }}>
+          Add
+        </button>
+        <button className="ms-1" onClick={updateCourse} style={{ borderRadius: "4px" }}>
+          Update
+        </button>
+      </div>
 
       <h2>Published Courses (3)</h2> <hr />
       <div className="row">
@@ -41,24 +44,26 @@ function Dashboard(
                     style={{ textDecoration: "none", color: "navy", fontWeight: "bold" }}>
                     {course.name} </Link>
                   <br />
+                  <p className="card-text">{course._id} {course.name}</p>
+                  <Link to={`/Kanbas/Courses/${course._id}/Home`} className="btn btn-primary">
+                    Go </Link>
 
-                  <button onClick={(event) => {
-                    event.preventDefault();
-                    setCourse(course);
-                  }}>
-                    Edit
-                  </button>
-
-                  <button onClick={(event) => {
+                  <button className="ms-1" style={{ borderRadius: "4px", backgroundColor: "red", color: "white", float: "right" }} onClick={(event) => {
                     event.preventDefault();
                     deleteCourse(course._id);
                   }}>
                     Delete
                   </button>
 
-                  <p className="card-text">{course._id} {course.name}</p>
-                  <Link to={`/Kanbas/Courses/${course._id}/Home`} className="btn btn-primary">
-                    Go </Link>
+                  <button className="ms-1" style={{ borderRadius: "4px", float: "right" }} onClick={(event) => {
+                    event.preventDefault();
+                    setCourse(course);
+                  }}>
+                    Edit
+                  </button>
+
+
+
                 </div>
               </div>
             </div>

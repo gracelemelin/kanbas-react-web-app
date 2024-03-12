@@ -5,10 +5,10 @@ import Modules from "./Modules";
 import Home from "./Home";
 import Assignments from "./Assignments";
 
-function Courses({mycourses} : {mycourses: any}) {
+function Courses({mycourses} : {mycourses: any[]}) {
   const { courseId } = useParams();
   const loc = window.location.href;
-  const course = mycourses.find((course: any) => course._id === courseId);
+  const course = mycourses.find((course) => course._id === courseId);
   const l = loc?.substring(loc.lastIndexOf('/') + 1);
   return (
     <div>

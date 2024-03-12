@@ -10,7 +10,7 @@ import { Provider } from "react-redux";
 function Kanbas() {
   const { pathname } = useLocation();
 
-  const [mycourses, setCourses] = useState(courses);
+  const [mycourses, setCourses] = useState<any[]>(courses);
   const [course, setCourse] = useState({
     _id: "0", name: "New Course", number: "New Number",
     startDate: "2023-09-10", endDate: "2023-12-15",
