@@ -31,7 +31,7 @@ function Dashboard(
         </button>
       </div>
 
-      <h2>Published Courses (3)</h2> <hr />
+      <h2>Published Courses ({mycourses.length})</h2> <hr />
       <div className="row">
         <div className="row row-cols-1 row-cols-md-5 g-4">
           {mycourses.map((course: any) => (
@@ -44,13 +44,15 @@ function Dashboard(
                     style={{ textDecoration: "none", color: "navy", fontWeight: "bold" }}>
                     {course.name} </Link>
                   <br />
-                  <p className="card-text">{course._id} {course.name}</p>
+                  <p className="card-text">{course._id}</p>
                   <Link to={`/Kanbas/Courses/${course._id}/Home`} className="btn btn-primary">
                     Go </Link>
 
                   <button className="btn btn-danger ms-1" style={{ borderRadius: "4px", float: "right" }} onClick={(event) => {
                     event.preventDefault();
+                    console.log(course._id)
                     deleteCourse(course._id);
+                    
                   }}>
                     Delete
                   </button>

@@ -17,18 +17,14 @@ function Kanbas() {
     image: "reactjs.webp"
   });
   const addNewCourse = () => {
-    const newCourse = {
-      ...course,
-      _id: new Date().getTime().toString()
-    };
-    setCourses([...mycourses, { ...course, ...newCourse }]);
+    setCourses([...mycourses, {...course, _id: new Date().getTime().toString()}]);
   };
-  const deleteCourse = (courseId: string) => {
-    setCourses(courses.filter((course) => course._id !== courseId));
+  const deleteCourse = (courseId: any) => {
+    setCourses(mycourses.filter((course) => course._id !== courseId ));
   };
   const updateCourse = () => {
     setCourses(
-      courses.map((c) => {
+      mycourses.map((c) => {
         if (c._id === course._id) {
           return course;
         } else {
