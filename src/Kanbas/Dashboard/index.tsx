@@ -23,10 +23,10 @@ function Dashboard(
       <input value={course.endDate} className="form-control" type="date"
         onChange={(e) => setCourse({ ...course, endDate: e.target.value })} />
       <div className="pt-2">
-        <button onClick={addNewCourse} style={{ borderRadius: "4px", backgroundColor: "green", color: "white" }}>
+        <button className="mb-1" onClick={addNewCourse} style={{ borderRadius: "4px", backgroundColor: "green", color: "white", border: "none" }}>
           Add
         </button>
-        <button className="ms-1" onClick={updateCourse} style={{ borderRadius: "4px" }}>
+        <button className="ms-1 mb-1" onClick={updateCourse} style={{ borderRadius: "4px", border: "none", backgroundColor: "lightgray" }}>
           Update
         </button>
       </div>
@@ -48,14 +48,14 @@ function Dashboard(
                   <Link to={`/Kanbas/Courses/${course._id}/Home`} className="btn btn-primary">
                     Go </Link>
 
-                  <button className="ms-1" style={{ borderRadius: "4px", backgroundColor: "red", color: "white", float: "right" }} onClick={(event) => {
+                  <button className="btn btn-danger ms-1" style={{ borderRadius: "4px", float: "right" }} onClick={(event) => {
                     event.preventDefault();
                     deleteCourse(course._id);
                   }}>
                     Delete
                   </button>
 
-                  <button className="ms-1" style={{ borderRadius: "4px", float: "right" }} onClick={(event) => {
+                  <button className="btn btn-basic ms-1" style={{ borderRadius: "4px", float: "right", backgroundColor: "lightgray" }} onClick={(event) => {
                     event.preventDefault();
                     setCourse(course);
                   }}>

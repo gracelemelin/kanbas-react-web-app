@@ -16,9 +16,9 @@ import { KanbasState } from "../../store";
 function ModuleList() {
   const { courseId } = useParams();
 
-  const moduleList = useSelector((state: KanbasState) => 
+  const moduleList = useSelector((state: KanbasState) =>
     state.modulesReducer.modules);
-  const module = useSelector((state: KanbasState) => 
+  const module = useSelector((state: KanbasState) =>
     state.modulesReducer.module);
   const dispatch = useDispatch();
 
@@ -42,15 +42,17 @@ function ModuleList() {
       <hr />
       <ul className="list-group wd-modules">
         <li className="list-group-item">
-          <button onClick={() => dispatch(addModule({ ...module, course: courseId }))}>Add</button>
-          <button onClick={() => dispatch(updateModule(module))}>Update</button>
-          <input value={module.name}
+          <input value={module.name} className="mb-1 ms-1 mt-1" style={{ width: "99%" }}
             onChange={(e) => dispatch(setModule({ ...module, name: e.target.value }))}
           />
-          <textarea value={module.description}
+          <br />
+          <textarea value={module.description} className="ms-1" style={{ width: "99%" }}
             onChange={(e) => dispatch(setModule({ ...module, description: e.target.value }))
-          }
+            }
           />
+          <br />
+          <button className="btn btn-success ms-1 me-1 mb-1 p-1" style={{ borderRadius: "4px" }} onClick={() => dispatch(addModule({ ...module, course: courseId }))}>Add</button>
+          <button className="btn btn-info mb-1 p-1" style={{ borderRadius: "4px", color: "white" }} onClick={() => dispatch(updateModule(module))}>Update</button>
         </li>
 
         {moduleList
@@ -61,10 +63,14 @@ function ModuleList() {
               className="list-group-item"
               onClick={() => setSelectedModule(module)}>
               <button
+                className="btn btn-success float-end p-1 mt-1 me-1"
+                style={{ borderRadius: "4px" }}
                 onClick={() => dispatch(setModule(module))}>
                 Edit
               </button>
               <button
+                className="btn btn-danger float-end p-1 mt-1 me-1"
+                style={{ borderRadius: "4px" }}
                 onClick={() => dispatch(deleteModule(module._id))}>
                 Delete
               </button>
