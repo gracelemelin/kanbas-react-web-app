@@ -7,5 +7,17 @@
   { "_id": "A203", "title": "Heating Analysis", "course": "RS102" },
   { "_id": "A301", "title": "Structural Design Task", "course": "RS103" },
   { "_id": "A302", "title": "Orbital Calculations", "course": "RS103" },
-  { "_id": "A303", "title": "Systems Engineering Exam", "course": "RS103" }
+  { "_id": "A303", "title": "Systems Engineering Exam", "course": "RS103" },
+  { "_id": "A401", "title": "Algorithms PS 1", "course": "CS123" },
+  { "_id": "A402", "title": "Algorithms Quiz 1", "course": "CS123" },
+  { "_id": "A403", "title": "Algorithms Project", "course": "CS123" },
+  { "_id": "A501", "title": "Assignment 1", "course": "CS456" },
+  { "_id": "A502", "title": "Find Project Partners", "course": "CS456" },
+  { "_id": "A503", "title": "Start Midterm Project", "course": "CS456" },
+  { "_id": "A601", "title": "Data Visualization Practice", "course": "DS100" },
+  { "_id": "A602", "title": "Python Practice", "course": "DS100" },
+  { "_id": "A603", "title": "Quiz 1", "course": "DS100" },
+  { "_id": "A701", "title": "Prep Work", "course": "IS300" },
+  { "_id": "A702", "title": "Heuristics Activity", "course": "IS300" },
+  { "_id": "A703", "title": "Choose a Website", "course": "IS300" }
 ]

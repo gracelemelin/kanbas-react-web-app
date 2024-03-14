@@ -77,10 +77,6 @@ function ModuleList() {
               <div>
                 <FaEllipsisV className="me-2" />
                 {module.name}
-                <br />
-                {module.description}
-                <br />
-                {module._id}
                 <span className="float-end">
                   <FaCheckCircle className="text-success" />
                   <FaPlusCircle className="ms-2" />
