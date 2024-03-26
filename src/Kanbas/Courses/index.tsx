@@ -4,12 +4,29 @@ import CourseNavigation from "./Navigation";
 import Modules from "./Modules";
 import Home from "./Home";
 import Assignments from "./Assignments";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-function Courses({mycourses} : {mycourses: any[]}) {
+function Courses() {
   const { courseId } = useParams();
   const loc = window.location.href;
-  const course = mycourses.find((course) => course._id === courseId);
+
   const l = loc?.substring(loc.lastIndexOf('/') + 1);
+  const COURSES_API = "http://localhost:4000/api/courses";
+  const [course, setCourse] = useState<any>({ _id: "" });
+  const findCourseById = async (courseId?: string) => {
+    const response = await axios.get(
+      `${COURSES_API}/${courseId}`
+    );
+    setCourse(response.data);
+  };
+
+  useEffect(() => {
+    findCourseById(courseId);
+  }, [courseId]);
+
+
+
   return (
     <div>
       <div className="flex-row-container d-none d-md-block">

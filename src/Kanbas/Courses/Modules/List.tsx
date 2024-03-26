@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./index.css";
 import { modules } from "../../Database";
 import { FaEllipsisV, FaCheckCircle, FaPlusCircle, FaGlasses } from "react-icons/fa";
@@ -9,12 +9,37 @@ import {
   deleteModule,
   updateModule,
   setModule,
+  setModules,
 } from "./modulesReducer";
 import { KanbasState } from "../../store";
+import * as client from "./client";
 
 
 function ModuleList() {
   const { courseId } = useParams();
+  useEffect(() => {
+    client.findModulesForCourse(courseId)
+      .then((modules) =>
+        dispatch(setModules(modules))
+    );
+  }, [courseId]);
+
+  const handleUpdateModule = async () => {
+    const status = await client.updateModule(module);
+    dispatch(updateModule(module));
+  };
+
+  const handleDeleteModule = (moduleId: string) => {
+    client.deleteModule(moduleId).then((status) => {
+      dispatch(deleteModule(moduleId));
+    });
+  };
+
+  const handleAddModule = () => {
+    client.createModule(courseId, module).then((module) => {
+      dispatch(addModule(module));
+    });
+  };
 
   const moduleList = useSelector((state: KanbasState) =>
     state.modulesReducer.modules);
@@ -51,8 +76,8 @@ function ModuleList() {
             }
           />
           <br />
-          <button className="btn btn-success ms-1 me-1 mb-1 p-1" style={{ borderRadius: "4px" }} onClick={() => dispatch(addModule({ ...module, course: courseId }))}>Add</button>
-          <button className="btn btn-info mb-1 p-1" style={{ borderRadius: "4px", color: "white" }} onClick={() => dispatch(updateModule(module))}>Update</button>
+          <button className="btn btn-success ms-1 me-1 mb-1 p-1" style={{ borderRadius: "4px" }} onClick={handleAddModule}>Add</button>
+          <button className="btn btn-info mb-1 p-1" style={{ borderRadius: "4px", color: "white" }} onClick={handleUpdateModule}>Update</button>
         </li>
 
         {moduleList
@@ -71,7 +96,7 @@ function ModuleList() {
               <button
                 className="btn btn-danger float-end p-1 mt-1 me-1"
                 style={{ borderRadius: "4px" }}
-                onClick={() => dispatch(deleteModule(module._id))}>
+                onClick={() => handleDeleteModule(module._id)}>
                 Delete
               </button>
               <div>

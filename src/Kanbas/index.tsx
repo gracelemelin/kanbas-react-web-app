@@ -2,27 +2,22 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import KanbasNavigation from "./Navigation";
 import Dashboard from "./Dashboard";
 import Courses from "./Courses";
-import { useState } from "react";
-import { courses } from "./Database";
+import { useState, useEffect } from "react";
 import store from "./store";
 import { Provider } from "react-redux";
+import axios from "axios";
 
 function Kanbas() {
   const { pathname } = useLocation();
 
-  const [mycourses, setCourses] = useState<any[]>(courses);
-  const [course, setCourse] = useState({
-    _id: "0", name: "New Course", number: "New Number",
-    startDate: "2023-09-10", endDate: "2023-12-15",
-    image: "reactjs.webp"
-  });
-  const addNewCourse = () => {
-    setCourses([...mycourses, {...course, _id: new Date().getTime().toString()}]);
-  };
-  const deleteCourse = (courseId: any) => {
-    setCourses(mycourses.filter((course) => course._id !== courseId ));
-  };
-  const updateCourse = () => {
+  const [mycourses, setCourses] = useState<any[]>([]);
+  const COURSES_API = "http://localhost:4000/api/courses";
+
+  const updateCourse = async () => {
+    const response = await axios.put(
+      `${COURSES_API}/${course._id}`,
+      course
+    );
     setCourses(
       mycourses.map((c) => {
         if (c._id === course._id) {
@@ -33,6 +28,34 @@ function Kanbas() {
       })
     );
   };
+
+  const addNewCourse = async () => {
+    const response = await axios.post(COURSES_API, course);
+    setCourses([...mycourses, response.data]);
+  };
+
+  const findAllCourses = async () => {
+    const response = await axios.get(COURSES_API);
+    setCourses(response.data);
+  };
+  useEffect(() => {
+    findAllCourses();
+  }, []);
+
+  const [course, setCourse] = useState({
+    _id: "0", name: "New Course", number: "New Number",
+    startDate: "2023-09-10", endDate: "2023-12-15",
+    image: "reactjs.webp"
+  });
+  
+  const deleteCourse = async (courseId: any) => {
+    const response = await axios.delete(
+      `${COURSES_API}/${courseId}`
+    );
+    setCourses(mycourses.filter((course) => course._id !== courseId ));
+  };
+
+  
 
 
   return (
@@ -54,7 +77,7 @@ function Kanbas() {
                 deleteCourse={deleteCourse}
                 updateCourse={updateCourse} />
             } />
-            <Route path="Courses/:courseId/*" element={<Courses mycourses={mycourses} />} />
+            <Route path="Courses/:courseId/*" element={<Courses />} />
           </Routes>
         </div>
       </div>
