@@ -1,7 +1,7 @@
 import axios from "axios";
 const API_BASE = process.env.REACT_APP_API_BASE;
 const COURSES_API = `${API_BASE}/api/courses`;
-
+const MODULES_API = `${API_BASE}/api/modules`;
 
 export const updateModule = async (module : any) => {
     const response = await axios.
@@ -9,7 +9,6 @@ export const updateModule = async (module : any) => {
     return response.data;
   };  
 
-const MODULES_API = `${API_BASE}/api/modules`;
 export const deleteModule = async (moduleId : any) => {
   const response = await axios
     .delete(`${MODULES_API}/${moduleId}`);
