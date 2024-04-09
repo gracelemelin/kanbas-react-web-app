@@ -4,6 +4,7 @@ import CourseNavigation from "./Navigation";
 import Modules from "./Modules";
 import Home from "./Home";
 import Assignments from "./Assignments";
+import Quizzes from "./Quizzes";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -58,6 +59,7 @@ function Courses() {
             <Route path="Assignments" element={<Assignments />} />
             <Route path="Assignments/:assignmentId" element={<h1>Assignment Editor</h1>} />
             <Route path="Grades" element={<h1>Grades</h1>} />
+            <Route path="Quizzes" element={<Quizzes />} />
           </Routes>
         </div>
       </div>

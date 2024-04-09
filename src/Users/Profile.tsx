@@ -8,16 +8,22 @@ export default function Profile() {
   const [profile, setProfile] = useState({ username: "", password: "", 
     firstName: "", lastName: "", dob: "", email: "", role: "USER" });
   const navigate = useNavigate();
+
+  // const fetchProfile = async () => {
+  //   try {
+  //     const profile = await client.profile();
+  //     console.log("current profile:", profile);
+  //     setProfile(profile);
+  //   } catch (err) {
+  //     navigate(LOG_IN_PAGE);
+  //     console.log(err);
+  //   }
+  // };
   const fetchProfile = async () => {
-    try {
-      const profile = await client.profile();
-      console.log("current profile:", profile);
-      setProfile(profile);
-    } catch (err) {
-      navigate(LOG_IN_PAGE);
-      console.log(err);
-    }
+    const account = await client.profile();
+    setProfile(account);
   };
+
 
   useEffect(() => {
     fetchProfile();
