@@ -16,6 +16,7 @@ function Quizzes() {
         _id: "0", title: "New Quiz"
     });
 
+    //Finding all quizzes of a particular course
     const findCourseQuizzes = async () => {
         const response = await axios.get(
             `${COURSES_API}/${courseId}/quizzes`
@@ -63,7 +64,7 @@ function Quizzes() {
                             <li className="list-group-item">
                                 <FaEllipsisV className="me-2" />
                                 <Link
-                                    to={`/Kanbas/Courses/${courseId}/Quizzes/${q._id}/Details`}>{q.title}</Link>
+                                    to={`${q._id}/Details`}>{q.title}</Link>
                                 <span className="float-end">
                                     <FcCancel />
                                     <button className="btn dropdown-toggle ms-1"
