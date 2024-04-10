@@ -30,7 +30,7 @@ function Assignments() {
           </div>
           <ul className="list-group">
             {assignmentList.map((assignment) => (
-              <li className="list-group-item">
+              <li key={assignment._id} className="list-group-item">
                 <FaEllipsisV className="me-2" />
                 <Link
                   to={`/Kanbas/Courses/${courseId}/Assignments/${assignment._id}`}>{assignment.title}</Link>

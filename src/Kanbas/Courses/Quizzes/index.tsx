@@ -13,7 +13,7 @@ function Quizzes() {
     const { courseId } = useParams();
     const [quizzes, setQuizzes] = useState<any[]>([]);
     const [quiz, setQuiz] = useState({
-        _id: "0", title: "New Quiz"
+        _id: "0", title: "New Quiz", course: "", published: false
     });
 
     //Finding all quizzes of a particular course
@@ -35,7 +35,6 @@ function Quizzes() {
         setQuizzes([...quizzes, response.data]);
     };
 
-    //this doesn't work perfectly
     const deleteQuiz = async (quizId: any) => {
         const response = await axios.delete(
             `${COURSES_API}/${courseId}/quizzes/${quizId}`
@@ -71,9 +70,7 @@ function Quizzes() {
                                         type="button"
                                         style={{ borderRadius: "4px" }}
                                         id="dropdownMenuButton"
-                                        data-bs-toggle="dropdown"
-                                        aria-bs-haspopup="true"
-                                        aria-bs-expanded="false"><FaEllipsisV /></button>
+                                        data-bs-toggle="dropdown"><FaEllipsisV /></button>
                                     <div className="dropdown-menu" aria-bs-labelledby="dropdownMenuButton">
                                         <button className="dropdown-item">Edit</button>
                                         <button className="dropdown-item" onClick={(event) => {

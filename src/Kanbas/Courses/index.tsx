@@ -8,6 +8,8 @@ import Quizzes from "./Quizzes";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Details from "./Quizzes/Details";
+import QuizDetailsEditor from "./Quizzes/QuizDetailsEditor";
+import QuizQuestionEditor from "./Quizzes/QuizQuestionEditor";
 
 function Courses() {
   const { courseId } = useParams();
@@ -62,6 +64,9 @@ function Courses() {
             <Route path="Grades" element={<h1>Grades</h1>} />
             <Route path="Quizzes" element={<Quizzes />} />
             <Route path="Quizzes/:qId/Details" element={<Details />} />
+            {/* <Route path="Quizzes/:qId/Details/Edit" element={<Navigate to="Quizzes/:qid/Edit/Details" />} /> */}
+            <Route path="Quizzes/:qid/Edit/Details" element={<QuizDetailsEditor />} />
+            <Route path="Quizzes/:qid/Edit/Questions" element={<QuizQuestionEditor />} />
           </Routes>
         </div>
       </div>
