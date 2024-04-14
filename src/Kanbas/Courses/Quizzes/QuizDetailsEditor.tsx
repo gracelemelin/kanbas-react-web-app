@@ -4,6 +4,7 @@ import { KanbasState } from "../../store";
 import { FcCancel } from "react-icons/fc";
 import { FaCheckCircle } from "react-icons/fa";
 import { useEffect } from "react";
+import { Editor } from "@tinymce/tinymce-react";
 
 function QuizDetailsEditor() {
 
@@ -19,9 +20,11 @@ function QuizDetailsEditor() {
             {quiz.published ? <FaCheckCircle/> : <FcCancel />}
             <hr/>
          <QuizEditorNav/>
+         
+         
          <input value={quiz.title}/> <br/>
          Quiz Instructions:
-         <textarea/> <br/>
+         <Editor apiKey="gsnm8akbzb409mao7s6d7oyxeg6d2gq6tkhh5k88lmlp4018"/> <br/>
          Quiz Type
          <select>
                 <option>Graded Quiz</option>

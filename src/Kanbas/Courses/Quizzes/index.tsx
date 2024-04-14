@@ -72,7 +72,7 @@ function Quizzes() {
                                         id="dropdownMenuButton"
                                         data-bs-toggle="dropdown"><FaEllipsisV /></button>
                                     <div className="dropdown-menu" aria-bs-labelledby="dropdownMenuButton">
-                                        <button className="dropdown-item">Edit</button>
+                                        <Link to={`/Kanbas/Courses/${courseId}/Quizzes/${q._id}/Edit/Details`}><button className="dropdown-item">Edit</button></Link> 
                                         <button className="dropdown-item" onClick={(event) => {
                                             event.preventDefault();
                                             deleteQuiz(q._id);

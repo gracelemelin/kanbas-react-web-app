@@ -6,8 +6,8 @@ function QuizEditorNav() {
     const l = pathname?.substring(0, pathname.lastIndexOf('/'));
     return (
         <nav className="nav nav-tabs">
-            <Link className={`nav-link ${pathname.includes("details") ? "active" : ""}`} to={`${l}/Details`}>Details</Link>
-            <Link className={`nav-link ${pathname.includes("questions") ? "active" : ""}`} to={`${l}/Questions`}>Questions</Link>
+            <Link className={`nav-link ${pathname.includes("Details") ? "active" : ""}`} to={`${l}/Details`}>Details</Link>
+            <Link className={`nav-link ${pathname.includes("Questions") ? "active" : ""}`} to={`${l}/Questions`}>Questions</Link>
         </nav>
     )
 } export default QuizEditorNav;
