@@ -33,6 +33,11 @@ function Kanbas() {
   };
 
   const addNewCourse = async () => {
+    mycourses.map((c) => {
+      if (c.name === course.name) {
+        return course;
+      }
+    })
     const response = await axios.post(COURSES_API, course);
     setCourses([...mycourses, response.data]);
   };
