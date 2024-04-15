@@ -4,6 +4,7 @@ import QuizEditorNav from "./QuizEditorNav";
 import { FaCheckCircle } from "react-icons/fa";
 import { FcCancel } from "react-icons/fc";
 import QuestionTypes from "./QuestionTypes";
+import { useEffect, useState } from "react";
 
 function QuizQuestionEditor() {
     const quiz = useSelector((state: KanbasState) =>
@@ -12,12 +13,48 @@ function QuizQuestionEditor() {
     const quizSettings = useSelector((state: KanbasState) =>
         state.quizReducer.quizsettings);
 
+    // db
+    const [questions, setQuestions] = useState<any[]>([])
+    const [q, setQ] = useState( {
+        _id: "0",
+        type: "multipleChoice",
+        question: "",
+        answers: []});
+
+
+    const addNewQuestion = () => {
+          setQuestions([...questions, {...q, _id: new Date().getTime().toString()}])
+          console.log(questions)
+    }
+
+    const updateQuestion = () => {
+      setQuestions(
+        questions.map((tq) => {
+          if (tq._id === q._id){
+            return q
+          }
+          else{
+            return tq
+          }
+        })
+      )
+    }
+
+
+    const findAllQuestionsForQuiz = () => {
+      setQuestions(tempQuestions)
+    }
+    
+    useEffect(() => {
+      findAllQuestionsForQuiz();
+    },[])
+
     const tempQuestions = [
         {
           id: 1,
           type: "multipleChoice",
           question: "What is React?",
-          options: [
+          answers: [
             { text: "A JavaScript framework", isCorrect: false },
             { text: "A JavaScript library for building user interfaces", isCorrect: true },
             { text: "A programming language", isCorrect: false },
@@ -34,13 +71,13 @@ function QuizQuestionEditor() {
           id: 3,
           type: "fillInBlank",
           question: "React is a _____ library for building user interfaces, developed by Facebook.",
-          answer: "JavaScript"
+          answers: ["JavaScript"]
         },
         {
           id: 4,
           type: "multipleChoice",
           question: "What are the key features of React?",
-          options: [
+          answers: [
             { text: "Virtual DOM", isCorrect: true },
             { text: "One-way data flow", isCorrect: true },
             { text: "Two-way data binding", isCorrect: false },
@@ -57,7 +94,7 @@ function QuizQuestionEditor() {
           id: 6,
           type: "fillInBlank",
           question: "_____ is a built-in object used to store data that affects a component's behavior and appearance in React.",
-          answer: "State"
+          answers: ["State"]
         },
         {
           id: 7,
@@ -68,14 +105,15 @@ function QuizQuestionEditor() {
         // Add more questions as needed
       ];
 
+
     return (
         <div>
             Points {quizSettings.points}
             {quiz.published ? <FaCheckCircle /> : <FcCancel />}
             <hr />
             <QuizEditorNav />
-            <button>+ New Question</button>
-            {tempQuestions.map((q) => QuestionTypes(q))}
+            <button onClick={addNewQuestion}>+ New Question</button>
+            {tempQuestions.map((q) => QuestionTypes(q, setQuestions, updateQuestion))}
         </div>
     )
 } export default QuizQuestionEditor;

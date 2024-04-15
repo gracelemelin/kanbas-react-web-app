@@ -5,35 +5,94 @@ import Blank from "./Blank";
 import "./index.css";
 import { useState } from "react";
 
-function QuestionTypes(question : any) {
+function QuestionTypes(question : any, setQuestions: any, updateQuestion : any) {
+    const API_KEY = process.env.TINYMCE_API;
+
     const [q, setQ] = useState(question);
 
-    const renderSwitch = (type : any) => {
-        switch(type) {
+    const handleAnswerChange = (ans : any) => {
+        switch(question.type) {
             case "multipleChoice":
-                return <MultChoice element={type}/>;
+                const newqmc = q
+                newqmc.answers = ans
+                updateQuestion()
+                console.log(q)
+                return;
             case "trueFalse":
-                return <TrueFalse element={type} />;
+                const newqtf = q
+                newqtf.answer = ans
+                updateQuestion()
+                console.log(q)
+                return;
             case "fillInBlank":
-                return <Blank element={type}/>;
+                const newqb = q
+                newqb.answers = ans
+                updateQuestion()
+                console.log(q)
+                return;
             default:
                 return;
         }
     }
+
+    const renderSwitch = (type : any) => {
+        switch(type) {
+            case "multipleChoice":
+                console.log(q)
+                return <MultChoice question={question} sendBack={handleAnswerChange}/>;
+            case "trueFalse":
+                console.log(q)
+                return <TrueFalse question={question} sendBack={handleAnswerChange}/>;
+            case "fillInBlank":
+                console.log(q)
+                return <Blank question={question} sendBack={handleAnswerChange}/>;
+            default:
+                return;
+        }
+    }
+
+    const changeType = (type : String) => {
+        const newq = q;
+        switch(type) {
+            case "multipleChoice":
+                newq["type"] = "multipleChoice"
+                delete q.answer
+                // newq["answers"] = []
+                updateQuestion()
+                renderSwitch(newq["type"])
+                return;
+            case "trueFalse":
+                newq["type"] = "trueFalse"
+                delete q.answers
+                newq["answer"] = true
+                updateQuestion()
+                renderSwitch(newq["type"])
+                return;
+            case "fillInBlank":
+                newq["type"] = "fillInBlank"
+                delete q.answer
+                // newq["answers"] = []
+                updateQuestion()
+                renderSwitch(newq["type"])
+                return;
+            default:
+                return;
+        }
+    }
+
+
     return (
         <div className="questionDisplay">
-            <input value="Question Title"/>
-            <select>
-                <option>Multiple Choice</option>
-                <option>True/False</option>
-                <option>Fill in the Blank</option>
+            <select onChange={(e) => changeType(e.target.value)} defaultValue={q.type}>
+                <option value="multipleChoice">Multiple Choice</option>
+                <option value="trueFalse">True/False</option>
+                <option value="fillInBlank">Fill in the Blank</option>
             </select>
-            pts: <input type="number" value={1}/>
+            Points: <input type="number" defaultValue={1} />
             <hr/>
             Enter your question.
-            <Editor apiKey="gsnm8akbzb409mao7s6d7oyxeg6d2gq6tkhh5k88lmlp4018" value={question.question} init={{height: 200, width: 600}}/>
-            {renderSwitch(question.type)}
-           
+            <Editor apiKey="gsnm8akbzb409mao7s6d7oyxeg6d2gq6tkhh5k88lmlp4018" value={q.question} init={{height: 200, width: 600}}/>
+            {renderSwitch(q.type)}
         </div>
     )
 } export default QuestionTypes;
