@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import axios from "axios";
 import Account from "./Account";
 
-axios.defaults.withCredentials = true
+axios.defaults.withCredentials = true;
 
 const API_BASE = process.env.REACT_APP_API_BASE;
 
@@ -46,7 +46,7 @@ function Kanbas() {
         return course;
       }
     })
-    const newCourse = {...course, id: new Date().getTime().toString()};
+    const newCourse = { ...course, id: new Date().getTime().toString() };
     const response = await axios.post(COURSES_API, newCourse);
     setCourses([...mycourses, response.data]);
   };
