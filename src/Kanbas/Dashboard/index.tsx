@@ -2,8 +2,6 @@ import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
 
-axios.defaults.withCredentials = true;
-
 function Dashboard(
   { mycourses, course, setCourse, addNewCourse,
     deleteCourse, updateCourse }: {
