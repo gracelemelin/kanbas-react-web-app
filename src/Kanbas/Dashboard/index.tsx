@@ -40,7 +40,7 @@ function Dashboard(
                 <img src={`/images/${course.image}`} className="card-img-top"
                   style={{ height: 150 }} />
                 <div className="card-body">
-                  <Link className="card-title" to={`/Kanbas/Courses/${course._id}/Home`}
+                  <Link className="card-title" to={`/Kanbas/Courses/${course.id}/Home`}
                     style={{ textDecoration: "none", color: "navy", fontWeight: "bold" }}>
                     {course.name} </Link>
                   <br />
