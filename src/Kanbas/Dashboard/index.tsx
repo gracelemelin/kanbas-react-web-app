@@ -44,13 +44,12 @@ function Dashboard(
                     style={{ textDecoration: "none", color: "navy", fontWeight: "bold" }}>
                     {course.name} </Link>
                   <br />
-                  <p className="card-text">{course._id}</p>
-                  <Link to={`/Kanbas/Courses/${course._id}/Home`} className="btn btn-primary">
+                  <p className="card-text">{course.id}</p>
+                  <Link to={`/Kanbas/Courses/${course.id}/Home`} className="btn btn-primary">
                     Go </Link>
 
                   <button className="btn btn-danger ms-1" style={{ borderRadius: "4px", float: "right" }} onClick={(event) => {
                     event.preventDefault();
-                    console.log(course._id)
                     deleteCourse(course._id);
                     
                   }}>

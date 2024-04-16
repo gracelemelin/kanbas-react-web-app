@@ -16,14 +16,20 @@ function Kanbas() {
   const [mycourses, setCourses] = useState<any[]>([]);
   const COURSES_API = `${API_BASE}/api/courses`;
 
+  const [course, setCourse] = useState({
+    _id: "0", id: "0", name: "New Course", number: "New Number",
+    startDate: "2023-09-10", endDate: "2023-12-15",
+    image: "reactjs.webp"
+  });
+
   const updateCourse = async () => {
     const response = await axios.put(
-      `${COURSES_API}/${course._id}`,
+      `${COURSES_API}/${course.id}`,
       course
     );
     setCourses(
       mycourses.map((c) => {
-        if (c._id === course._id) {
+        if (c.id === course.id) {
           return course;
         } else {
           return c;
@@ -34,11 +40,12 @@ function Kanbas() {
 
   const addNewCourse = async () => {
     mycourses.map((c) => {
-      if (c.name === course.name) {
+      if (c.id === course.id) {
         return course;
       }
     })
-    const response = await axios.post(COURSES_API, course);
+    const newCourse = {...course, id: new Date().getTime().toString()};
+    const response = await axios.post(COURSES_API, newCourse);
     setCourses([...mycourses, response.data]);
   };
 
@@ -50,20 +57,15 @@ function Kanbas() {
     findAllCourses();
   }, []);
 
-  const [course, setCourse] = useState({
-    _id: "0", name: "New Course", number: "New Number",
-    startDate: "2023-09-10", endDate: "2023-12-15",
-    image: "reactjs.webp"
-  });
-  
+
   const deleteCourse = async (courseId: any) => {
     const response = await axios.delete(
       `${COURSES_API}/${courseId}`
     );
-    setCourses(mycourses.filter((course) => course._id !== courseId ));
+    setCourses(mycourses.filter((course) => course._id !== courseId));
   };
 
-  
+
 
 
   return (
