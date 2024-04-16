@@ -8,6 +8,8 @@ import { Provider } from "react-redux";
 import axios from "axios";
 import Account from "./Account";
 
+axios.defaults.withCredentials = true
+
 const API_BASE = process.env.REACT_APP_API_BASE;
 
 function Kanbas() {
