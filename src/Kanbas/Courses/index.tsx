@@ -10,6 +10,9 @@ import axios from "axios";
 import Details from "./Quizzes/Details";
 import QuizDetailsEditor from "./Quizzes/QuizDetailsEditor";
 import QuizQuestionEditor from "./Quizzes/QuizQuestionEditor";
+import { useSelector } from "react-redux";
+import { KanbasState } from "../store";
+import QuizPreview from "./Quizzes/Preview";
 
 function Courses() {
   const { courseId } = useParams();
@@ -19,12 +22,16 @@ function Courses() {
   const l = loc?.substring(loc.lastIndexOf('/') + 1);
   const COURSES_API = `${API_BASE}/api/courses`;
   const [course, setCourse] = useState<any>({ _id: "" });
+
   const findCourseById = async (courseId?: string) => {
     const response = await axios.get(
       `${COURSES_API}/${courseId}`
     );
     setCourse(response.data);
   };
+  
+  const [questions, setQuestions] = useState<any[]>(useSelector((state: KanbasState) =>
+    state.quizReducer.questions))
 
   useEffect(() => {
     findCourseById(courseId);
@@ -66,7 +73,8 @@ function Courses() {
             <Route path="Quizzes/:qId/Details" element={<Details />} />
             {/* <Route path="Quizzes/:qId/Details/Edit" element={<Navigate to="Quizzes/:qid/Edit/Details" />} /> */}
             <Route path="Quizzes/:qid/Edit/Details" element={<QuizDetailsEditor />} />
-            <Route path="Quizzes/:qid/Edit/Questions" element={<QuizQuestionEditor />} />
+            <Route path="Quizzes/:qid/Edit/Questions" element={<QuizQuestionEditor/>} />
+            <Route path="Quizzes/:qid/Preview" element={<QuizPreview/>} />
           </Routes>
         </div>
       </div>

@@ -10,6 +10,7 @@ export interface KanbasState {
   quizReducer: {
     quiz: any;
     quizsettings : any;
+    questions : any[]
   }
 }
 const store = configureStore({

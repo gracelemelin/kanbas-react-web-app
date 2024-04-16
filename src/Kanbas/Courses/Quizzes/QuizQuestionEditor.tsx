@@ -5,32 +5,39 @@ import { FaCheckCircle } from "react-icons/fa";
 import { FcCancel } from "react-icons/fc";
 import QuestionTypes from "./QuestionTypes";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { addQuestion } from "./reducer"
 
-function QuizQuestionEditor() {
+function QuizQuestionEditor(){
+  // questions : any, setQuestions : (param : any) => void) {
+    const dispatch = useDispatch()
+
+    const [questions, setQuestions] = useState<any[]>([])
+
     const quiz = useSelector((state: KanbasState) =>
         state.quizReducer.quiz);
 
     const quizSettings = useSelector((state: KanbasState) =>
         state.quizReducer.quizsettings);
 
-    // db
-    const [questions, setQuestions] = useState<any[]>([])
+
     const [q, setQ] = useState( {
-        _id: "0",
+        id: "0",
         type: "multipleChoice",
         question: "",
         answers: []});
 
 
-    const addNewQuestion = () => {
-          setQuestions([...questions, {...q, _id: new Date().getTime().toString()}])
+    const addNewQuestion = async () => {
+          dispatch(addQuestion(q))
+          setQuestions([...questions, {...q, id: new Date().getTime().toString()}])
           console.log(questions)
     }
 
     const updateQuestion = () => {
       setQuestions(
-        questions.map((tq) => {
-          if (tq._id === q._id){
+        questions.map((tq : any) => {
+          if (tq.id === q.id){
             return q
           }
           else{
@@ -46,7 +53,9 @@ function QuizQuestionEditor() {
     }
     
     useEffect(() => {
+      console.log(setQuestions);
       findAllQuestionsForQuiz();
+      console.log(setQuestions);
     },[])
 
     const tempQuestions = [

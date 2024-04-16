@@ -65,7 +65,7 @@ function Details() {
         <div>
             <div className="pt-5 pe-2" style={{ float: "right" }}>
                 <button className="btn btn-success"><FaRegCheckCircle /> Published</button>
-                <button className="btn">Preview</button>
+                <Link to={`/Kanbas/Courses/${courseId}/Quizzes/${qId}/Preview`}><button className="btn">Preview</button></Link> 
                 <Link to={`/Kanbas/Courses/${courseId}/Quizzes/${qId}/Edit/Details`}><button className="btn"><FaPencil /> Edit</button></Link> 
                 <button className="btn"><FaEllipsisV /></button>
             </div>
