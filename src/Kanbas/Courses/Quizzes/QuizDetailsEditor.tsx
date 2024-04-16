@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 
 function QuizDetailsEditor() {
-
     const quiz = useSelector((state: KanbasState) =>
     state.quizReducer.quiz);
 

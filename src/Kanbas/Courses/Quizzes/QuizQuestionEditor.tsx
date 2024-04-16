@@ -7,10 +7,15 @@ import QuestionTypes from "./QuestionTypes";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addQuestion } from "./reducer"
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 function QuizQuestionEditor(){
-  // questions : any, setQuestions : (param : any) => void) {
-    const dispatch = useDispatch()
+
+  const API_BASE = process.env.REACT_APP_API_BASE;
+  const COURSES_API = `${API_BASE}/api/courses`;
+
+    const {cid, qid} = useParams()
 
     const [questions, setQuestions] = useState<any[]>([])
 
@@ -23,18 +28,20 @@ function QuizQuestionEditor(){
 
     const [q, setQ] = useState( {
         id: "0",
+        qzid: "0",
         type: "multipleChoice",
         question: "",
         answers: []});
 
 
     const addNewQuestion = async () => {
-          dispatch(addQuestion(q))
-          setQuestions([...questions, {...q, id: new Date().getTime().toString()}])
-          console.log(questions)
+      const response = await axios.post(`${COURSES_API}/${cid}/quizzes/${qid}/questions`, q)
+      setQuestions([...questions, {...q, id: new Date().getTime().toString(), qzid: qid}])
     }
 
-    const updateQuestion = () => {
+    const updateQuestion = async () => {
+      const response = await axios.put(
+        `${COURSES_API}/${cid}/quizzes/${qid}/questions/${q.id}`, q)
       setQuestions(
         questions.map((tq : any) => {
           if (tq.id === q.id){
@@ -48,72 +55,17 @@ function QuizQuestionEditor(){
     }
 
 
-    const findAllQuestionsForQuiz = () => {
-      setQuestions(tempQuestions)
-    }
+    const findCourseQuizQuestions = async () => {
+      const response = await axios.get(
+          `${COURSES_API}/${cid}/quizzes/${qid}/questions`
+      );
+      setQuestions(questions => [...questions ,response.data]);
+      console.log(response.data)
+  };
     
     useEffect(() => {
-      console.log(setQuestions);
-      findAllQuestionsForQuiz();
-      console.log(setQuestions);
-    },[])
-
-    const tempQuestions = [
-        {
-          id: 1,
-          type: "multipleChoice",
-          question: "What is React?",
-          answers: [
-            { text: "A JavaScript framework", isCorrect: false },
-            { text: "A JavaScript library for building user interfaces", isCorrect: true },
-            { text: "A programming language", isCorrect: false },
-            { text: "A database management system", isCorrect: false }
-          ]
-        },
-        {
-          id: 2,
-          type: "trueFalse",
-          question: "JSX is a syntax extension for JavaScript used with React.",
-          answer: true
-        },
-        {
-          id: 3,
-          type: "fillInBlank",
-          question: "React is a _____ library for building user interfaces, developed by Facebook.",
-          answers: ["JavaScript"]
-        },
-        {
-          id: 4,
-          type: "multipleChoice",
-          question: "What are the key features of React?",
-          answers: [
-            { text: "Virtual DOM", isCorrect: true },
-            { text: "One-way data flow", isCorrect: true },
-            { text: "Two-way data binding", isCorrect: false },
-            { text: "SQL database integration", isCorrect: false }
-          ]
-        },
-        {
-          id: 5,
-          type: "trueFalse",
-          question: "Components in React are reusable pieces of code that describe how a part of the user interface should look.",
-          answer: true
-        },
-        {
-          id: 6,
-          type: "fillInBlank",
-          question: "_____ is a built-in object used to store data that affects a component's behavior and appearance in React.",
-          answers: ["State"]
-        },
-        {
-          id: 7,
-          type: "trueFalse",
-          question: "Props in React are read-only and passed from child to parent components.",
-          answer: false
-        }
-        // Add more questions as needed
-      ];
-
+      findCourseQuizQuestions();
+    },[questions])
 
     return (
         <div>
@@ -122,7 +74,7 @@ function QuizQuestionEditor(){
             <hr />
             <QuizEditorNav />
             <button onClick={addNewQuestion}>+ New Question</button>
-            {tempQuestions.map((q) => QuestionTypes(q, setQuestions, updateQuestion))}
+            {questions.map((q) => QuestionTypes(q, setQuestions, updateQuestion))}
         </div>
     )
 } export default QuizQuestionEditor;

@@ -1,13 +1,15 @@
 import { useSelector } from "react-redux";
 import { KanbasState } from "../../store";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router-dom";
 import MultChoice from "./QuestionTypes/MultChoice";
 import "./Preview.css"
 
 function QuizPreview() {
 
   let time = new Date().getTime().toString()
+
+  const {cid, qid} = useParams();
 
   // const quiz = useSelector((state: KanbasState) =>
   //     state.quizReducer.quiz);
@@ -124,7 +126,7 @@ function QuizPreview() {
           {qas?.map((qa: any) => (
             <div>
               <hr/>
-              <input type="checkbox" /><label>{qa}</label>
+              <input type="text" />
             </div>
           ))}
         </>
@@ -177,7 +179,7 @@ function QuizPreview() {
       <div >
       {oaat ? oneAtATime() : allAtOnce()}
       <button>Submit Quiz</button>
-      <button>Keep Editing This Quiz</button>
+      <Link to={`/Kanbas/Courses/${cid}/Quizzes/${qid}/Edit/Details`}><button>Keep Editing This Quiz</button></Link> 
       </div>
       <div className="Questions_List" style={{float: "right"}}>
       Questions

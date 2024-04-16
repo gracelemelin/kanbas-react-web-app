@@ -1,4 +1,4 @@
-import { FaEllipsisV } from "react-icons/fa";
+import { FaCheckCircle, FaEllipsisV } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -13,7 +13,7 @@ function Quizzes() {
     const { courseId } = useParams();
     const [quizzes, setQuizzes] = useState<any[]>([]);
     const [quiz, setQuiz] = useState({
-        _id: "0", title: "New Quiz", course: "", published: false
+        id: "0", title: "New Quiz", course: "", published: false
     });
 
     //Finding all quizzes of a particular course
@@ -23,7 +23,6 @@ function Quizzes() {
         );
         setQuizzes(response.data);
     };
-
     useEffect(() => {
         findCourseQuizzes();
     }, []);
@@ -41,6 +40,19 @@ function Quizzes() {
         );
         setQuizzes(quizzes.filter((q) => q._id !== quizId));
     };
+
+    const updateQuizPublish = async (quizId: any) => {
+        // const response = await axios.get(
+        //     `${COURSES_API}/${courseId}/quizzes/${quizId}`
+        // );
+        // const quizToUpdate = response.data;
+        // const curPublished = quizToUpdate.published;
+        // quizToUpdate = {...quizToUpdate, published: curPublished}
+        
+        // const reponse2 = await axios.put(
+
+        // )
+    }
 
     return (
         <div className="ps-1 pe-2 pt-2"
@@ -63,21 +75,21 @@ function Quizzes() {
                             <li className="list-group-item">
                                 <FaEllipsisV className="me-2" />
                                 <Link
-                                    to={`${q._id}/Details`}>{q.title}</Link>
+                                    to={`${q.id}/Details`}>{q.title}</Link>
                                 <span className="float-end">
-                                    <FcCancel />
+                                    <button onClick={() => updateQuizPublish(q.id)}>{q.published ? <FaCheckCircle style={{ color: "green" }} /> : <FcCancel />}</button>
                                     <button className="btn dropdown-toggle ms-1"
                                         type="button"
                                         style={{ borderRadius: "4px" }}
                                         id="dropdownMenuButton"
                                         data-bs-toggle="dropdown"><FaEllipsisV /></button>
                                     <div className="dropdown-menu" aria-bs-labelledby="dropdownMenuButton">
-                                        <Link to={`/Kanbas/Courses/${courseId}/Quizzes/${q._id}/Edit/Details`}><button className="dropdown-item">Edit</button></Link> 
+                                        <Link to={`/Kanbas/Courses/${courseId}/Quizzes/${q.id}/Edit/Details`}><button className="dropdown-item">Edit</button></Link>
                                         <button className="dropdown-item" onClick={(event) => {
                                             event.preventDefault();
                                             deleteQuiz(q._id);
                                         }}>Delete</button>
-                                         <button className="dropdown-item">Publish</button>
+                                        <button className="dropdown-item">Publish</button>
                                     </div></span>
                             </li>))}
                     </ul>
