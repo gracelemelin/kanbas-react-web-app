@@ -5,7 +5,8 @@ function MultChoice(props: { question: any; sendBack: any; }) {
     const [anss, setAnss] = useState<any[]>([question.answers][0]);
 
     const addAns = () => {
-        setAnss([...anss, ""]);
+        setAnss([...anss, {}]);
+        sendBack(anss)
     }
 
     const setOneAnssText = (index : any, value : any) => {

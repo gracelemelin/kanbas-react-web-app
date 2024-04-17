@@ -3,15 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     questions: [] as any,
     quiz: {
-        _id: "0", title: "New Quiz", course: "", published: false
+        id: "0", title: "New Quiz", course: "", published: false
     },
     quizsettings: {
-        _id: "0",
+        id: "0",
         quizType: "Graded Quiz",
         points: 100,
         assignmentGroup: "Quizzes",
         shuffleAnswers: true,
-        timeLimit: 30,
+        timeLimit: 20,
         multipleAttempts: false,
         showCorrectAnswers: true,
         accessCode: "1234",

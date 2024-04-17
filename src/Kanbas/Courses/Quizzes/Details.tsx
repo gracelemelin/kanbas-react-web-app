@@ -41,16 +41,18 @@ function Details() {
         const response = await axios.get(
             `${COURSES_API}/${courseId}/quizzes/${qId}`
         );
-        setQuiz(response.data[0]);
-        dispatch(setQuiz2(response.data[0]))
+        console.log(response)
+        setQuiz(response.data);
+        dispatch(setQuiz2(response.data))
     };
 
     const findSettings = async () => {
         const response = await axios.get(
             `${COURSES_API}/${courseId}/quizzes/${qId}/settings`
         );
-        setSettings(response.data[0]);
-        dispatch(setQuizSettings2(response.data[0]))
+        console.log(response)
+        setSettings(response.data);
+        dispatch(setQuizSettings2(response.data))
     }
 
 
@@ -58,7 +60,6 @@ function Details() {
     useEffect(() => {
         findQuiz();
         findSettings();
-
     }, []);
 
     return (

@@ -33,6 +33,9 @@ function QuizQuestionEditor(){
         question: "",
         answers: []});
 
+    const deleteQuestion = async (qqid : any) => {
+      const response = await axios.delete(`${COURSES_API}/${cid}/quizzes/${qid}/questions/${qqid}`)
+    } 
 
     const addNewQuestion = async () => {
       const response = await axios.post(`${COURSES_API}/${cid}/quizzes/${qid}/questions`, q)
@@ -40,6 +43,7 @@ function QuizQuestionEditor(){
     }
 
     const updateQuestion = async () => {
+      console.log(questions)
       const response = await axios.put(
         `${COURSES_API}/${cid}/quizzes/${qid}/questions/${q.id}`, q)
       setQuestions(
@@ -59,13 +63,12 @@ function QuizQuestionEditor(){
       const response = await axios.get(
           `${COURSES_API}/${cid}/quizzes/${qid}/questions`
       );
-      setQuestions(questions => [...questions ,response.data]);
-      console.log(response.data)
+      setQuestions(response.data);
   };
     
     useEffect(() => {
       findCourseQuizQuestions();
-    },[questions])
+    },[])
 
     return (
         <div>
@@ -74,7 +77,7 @@ function QuizQuestionEditor(){
             <hr />
             <QuizEditorNav />
             <button onClick={addNewQuestion}>+ New Question</button>
-            {questions.map((q) => QuestionTypes(q, setQuestions, updateQuestion))}
+            {questions.map((q) => QuestionTypes(q, updateQuestion, deleteQuestion))}
         </div>
     )
 } export default QuizQuestionEditor;
