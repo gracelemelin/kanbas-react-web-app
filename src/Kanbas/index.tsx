@@ -10,10 +10,6 @@ import Account from "./Account";
 
 axios.defaults.withCredentials = true;
 
-const api = axios.create({
-  withCredentials: true
-});
-
 const API_BASE = process.env.REACT_APP_API_BASE;
 
 function Kanbas() {
@@ -29,7 +25,7 @@ function Kanbas() {
   });
 
   const updateCourse = async () => {
-    const response = await api.put(
+    const response = await axios.put(
       `${COURSES_API}/${course.id}`,
       course
     );
@@ -51,12 +47,12 @@ function Kanbas() {
       }
     })
     const newCourse = { ...course, id: new Date().getTime().toString() };
-    const response = await api.post(COURSES_API, newCourse);
+    const response = await axios.post(COURSES_API, newCourse);
     setCourses([...mycourses, response.data]);
   };
 
   const findAllCourses = async () => {
-    const response = await api.get(COURSES_API);
+    const response = await axios.get(COURSES_API);
     setCourses(response.data);
   };
   useEffect(() => {
@@ -65,7 +61,7 @@ function Kanbas() {
 
 
   const deleteCourse = async (courseId: any) => {
-    const response = await api.delete(
+    const response = await axios.delete(
       `${COURSES_API}/${courseId}`
     );
     setCourses(mycourses.filter((course) => course._id !== courseId));
