@@ -84,47 +84,45 @@ function QuizDetailsEditor() {
     }, []);
 
     return (
-        <div>
+        <div className="mt-5">
             Total Quiz Points: {quizSettings.points}
-            {quiz.published ? <FaCheckCircle/> : <FcCancel />}
+            {quiz.published ? <FaCheckCircle style={{color: "green"}}/> : <FcCancel />}
             <hr/>
          <QuizEditorNav/>
          
-         
-         <input value={quiz.title}/> <br/>
+         Quiz Title: <input value={quiz.title} className="mt-2"/> <br/>
          Quiz Instructions:
          <Editor apiKey="gsnm8akbzb409mao7s6d7oyxeg6d2gq6tkhh5k88lmlp4018"/> <br/>
-         Quiz Type
+         Quiz Type &nbsp;
          <select value={quizSettings.quizType} onChange={(e) => setSettings({ ...quizSettings, quizType: e.target.value })}>
                 <option>Graded Quiz</option>
                 <option>Practice Quiz</option>
                 <option>Graded Survey</option>
                 <option>Ungraded Survey</option>
          </select> <br/>
-         Assignment Group
-         <select value={quizSettings.assignmentGroup} onChange={(e) => setSettings({ ...quizSettings, assignmentGroup: e.target.value })}>
+         Assignment Group &nbsp;
+         <select className="mt-2 mb-2" value={quizSettings.assignmentGroup} onChange={(e) => setSettings({ ...quizSettings, assignmentGroup: e.target.value })}>
                 <option>Quizzes</option>
                 <option>Exams</option>
                 <option>Assignments</option>
                 <option>Projects</option>
          </select> <br/>
-         Options 
-         <input defaultChecked={quizSettings.shuffleAnswers} type="checkbox" onChange={(e) => setSettings({ ...quizSettings, shuffleAnswers: !quizSettings.shuffleAnswers })}/>Shuffle Answers
-         <input defaultChecked={quizSettings.multipleAttempts} type="checkbox"onChange={(e) => setSettings({ ...quizSettings, multipleAttempts:  e.target.value })}/> Allow Multiple attemps
-         <input value={quizSettings.timeLimit} onChange={(e) => setSettings({ ...quizSettings, timeLimit:  e.target.value })}/> Time Limit
+         Options <br/>
+         <input defaultChecked={quizSettings.shuffleAnswers} type="checkbox" onChange={(e) => setSettings({ ...quizSettings, shuffleAnswers: !quizSettings.shuffleAnswers })}/>Shuffle Answers <br/>
+         <input defaultChecked={quizSettings.multipleAttempts} type="checkbox"onChange={(e) => setSettings({ ...quizSettings, multipleAttempts:  e.target.value })}/> Allow Multiple Attempts <br/>
+         <input className="mb-2" type="checkbox"/> Time Limit &nbsp;<input value={quizSettings.timeLimit} onChange={(e) => setSettings({ ...quizSettings, timeLimit:  e.target.value })}/> Minutes
          <br/>
-         Assign 
          <div>
-          Due 
+          Due <br/>
           <input value={gettDateForInput(quizSettings.dueDate)} type="date" onChange={(e) => setSettings({ ...quizSettings, dueDate:  e.target.value })}/><br/>
-          Available From
+          Available From <br/>
           <input value={quizSettings.availableDate} type="date"onChange={(e) => setSettings({ ...quizSettings, availableDate:  e.target.value })} /><br/>
-          Until
-          <input value={quizSettings.untilDate} type="date"onChange={(e) => setSettings({ ...quizSettings, untilDate:  e.target.value })}/><br/>
+          Until <br/>
+          <input className="mb-2" value={quizSettings.untilDate} type="date"onChange={(e) => setSettings({ ...quizSettings, untilDate:  e.target.value })}/><br/>
          </div>
-         <Link to={`/Kanbas/Courses/${courseId}/Quizzes`}><button>Cancel</button></Link>
-         <button onClick={handleSaveAndPublish}>Save & Publish</button>
-         <button onClick={handleSave}>Save</button>
+         <Link to={`/Kanbas/Courses/${courseId}/Quizzes`}><button className="mb-2 me-2" style={{borderRadius: "4px"}}>Cancel</button></Link>
+         <button style={{borderRadius: "4px"}} className="mb-2 me-1" onClick={handleSaveAndPublish}>Save & Publish</button>
+         <button className="mb-2" style={{backgroundColor: "red", color: "white", borderRadius: "4px"}} onClick={handleSave}>Save</button>
         </div>
        
     )

@@ -71,12 +71,12 @@ function QuizQuestionEditor(){
     },[])
 
     return (
-        <div>
-            Points {quizSettings.points}
-            {quiz.published ? <FaCheckCircle /> : <FcCancel />}
+        <div className="mt-5">
+            Total Quiz Points: {quizSettings.points}
+            {quiz.published ? <FaCheckCircle style={{color: "green"}}/> : <FcCancel />}
             <hr />
             <QuizEditorNav />
-            <button onClick={addNewQuestion}>+ New Question</button>
+            <button className="mt-3 mb-2" style={{borderRadius: "4px"}} onClick={addNewQuestion}>+ New Question</button>
             {questions.map((q) => QuestionTypes(q, updateQuestion, deleteQuestion))}
         </div>
     )

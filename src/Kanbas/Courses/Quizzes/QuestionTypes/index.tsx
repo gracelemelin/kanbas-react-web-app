@@ -76,13 +76,13 @@ function QuestionTypes(question : any, updateQuestion : any, deleteQuestion : an
                 <option value="multipleChoice">Multiple Choice</option>
                 <option value="trueFalse">True/False</option>
                 <option value="fillInBlank">Fill in the Blank</option>
-            </select>
-            Points: <input type="number" defaultValue={1} />
+            </select> 
+            &nbsp;Points: <input type="number" defaultValue={1} />
             <hr/>
             Enter your question.
             <Editor apiKey="gsnm8akbzb409mao7s6d7oyxeg6d2gq6tkhh5k88lmlp4018" value={question.question} init={{height: 200, width: 600}}/>
             {renderSwitch(question.type)} 
-            <button onClick={() => {deleteQuestion(question.id)}}>Delete Question</button>
+            <button className="ms-1" style={{backgroundColor: "red", color: "white", borderRadius: "4px"}} onClick={() => {deleteQuestion(question.id)}}>Delete Question</button>
         </div>
     )
 } export default QuestionTypes;

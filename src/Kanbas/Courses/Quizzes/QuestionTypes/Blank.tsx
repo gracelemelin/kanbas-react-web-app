@@ -19,7 +19,7 @@ function Blank(props: { question: any; sendBack: any; }) {
             Answers:
             <br/>
             {anss?.map((a, i) => <div><input onChange={(e) => setOneAnssText(i, e.target.value)} value={a.text}/><br/></div>)}
-            <button onClick={addAns}>Add Answer + </button>
+            <button className="mt-2 mb-1 ms-1" onClick={addAns} style={{borderRadius: "4px", backgroundColor: "green", color: "white"}}>+ Add Answer </button>
         </div>
     )
 } export default Blank;
