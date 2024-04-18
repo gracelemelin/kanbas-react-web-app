@@ -26,30 +26,42 @@ function QuizQuestionEditor(){
         state.quizReducer.quizsettings);
 
 
-    const [q, setQ] = useState( {
-        id: "0",
-        qzid: "0",
-        type: "multipleChoice",
-        question: "",
-        answers: []});
+    // const [q, setQ] = useState( {
+    //     id: "0",
+    //     qzid: "0",
+    //     type: "multipleChoice",
+    //     question: "",
+    //     answers: []});
 
     const deleteQuestion = async (qqid : any) => {
       const response = await axios.delete(`${COURSES_API}/${cid}/quizzes/${qid}/questions/${qqid}`)
+      setQuestions(
+        questions.filter((tq : any) => {
+          if (tq._id !== qqid){
+            return tq;
+        }})
+      )
     } 
 
     const addNewQuestion = async () => {
+      const q = {
+            id: "0",
+            qzid: "0",
+            type: "multipleChoice",
+            question: "",
+            answers: []};
       const response = await axios.post(`${COURSES_API}/${cid}/quizzes/${qid}/questions`, q)
       setQuestions([...questions, {...q, id: new Date().getTime().toString(), qzid: qid}])
     }
 
-    const updateQuestion = async () => {
+    const updateQuestion = async (qqid : any, questionToUpdate : any) => {
       console.log(questions)
       const response = await axios.put(
-        `${COURSES_API}/${cid}/quizzes/${qid}/questions/${q.id}`, q)
+        `${COURSES_API}/${cid}/quizzes/${qid}/questions/${qqid}`, questionToUpdate)
       setQuestions(
         questions.map((tq : any) => {
-          if (tq.id === q.id){
-            return q
+          if (tq._id === qqid){
+            return questionToUpdate
           }
           else{
             return tq
@@ -77,7 +89,8 @@ function QuizQuestionEditor(){
             <hr />
             <QuizEditorNav />
             <button className="mt-3 mb-2" style={{borderRadius: "4px"}} onClick={addNewQuestion}>+ New Question</button>
-            {questions.map((q) => QuestionTypes(q, updateQuestion, deleteQuestion))}
+            <>
+            {questions.map((q) => <QuestionTypes question={q} updateQuestion={updateQuestion} deleteQuestion={deleteQuestion}/>)}</>
         </div>
     )
 } export default QuizQuestionEditor;
