@@ -40,7 +40,7 @@ function MultChoice(props: { question: any; sendBack: any; editable : any}) {
                 Answers:
                 <br/>
                 {anss?.map((a, i) => <div><input onChange={(e) => setOneAnssText(i, e.target.value)} value={a.text}/> 
-                                            &nbsp; <input type="radio" name={`mc${question._id}`} onClick={() => setOneAnssCorr(i)} /><br/></div>)}
+                                            &nbsp; <input type="radio" name={`mc${question._id}`} onClick={() => setOneAnssCorr(i)} /><button>Delete Answer</button><br/></div>)}        
                 <button className="mt-2 mb-1 ms-1" onClick={addAns} style={{borderRadius: "4px", backgroundColor: "green", color: "white"}}>+ Add Answer </button>
             </div>
             

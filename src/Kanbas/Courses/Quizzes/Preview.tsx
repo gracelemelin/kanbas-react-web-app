@@ -1,31 +1,30 @@
 import { useSelector } from "react-redux";
 import { KanbasState } from "../../store";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import MultChoice from "./QuestionTypes/MultChoice";
 import "./Preview.css"
+import axios from "axios";
 
 function QuizPreview() {
 
   let time = new Date().getTime().toString()
 
-  const {cid, qid} = useParams();
-
-  // const quiz = useSelector((state: KanbasState) =>
-  //     state.quizReducer.quiz);
-  // const settings = useSelector((state: KanbasState) =>
-  //     state.quizReducer.quizsettings);
-  // const questions = useSelector((state: KanbasState) =>
-  //     state.quizReducer.questions);
+  const {courseId, qid} = useParams();
 
   const [i, seti] = useState(0)
 
+  const [questions, setQuestions] = useState<any[]>([])
+
   const [quiz, setQuiz] = useState<any>({
-    _id: "0", title: "New Quiz", course: "", published: false
+    id: "0", title: "New Quiz", course: "", published: false
   });
 
+  const API_BASE = process.env.REACT_APP_API_BASE;
+  const COURSES_API = `${API_BASE}/api/courses`;
+
   const [settings, setSettings] = useState<any>({
-    _id: "0",
+    id: "0",
     quizType: "Graded Quiz",
     points: 100,
     assignmentGroup: "Quizzes",
@@ -33,7 +32,7 @@ function QuizPreview() {
     timeLimit: 30,
     multipleAttempts: false,
     showCorrectAnswers: true,
-    accessCode: "1234",
+    accessCode: "",
     oneQuestionAtATime: true,
     webcamRequired: false,
     lockQuestionsAfterAnswering: false,
@@ -42,65 +41,35 @@ function QuizPreview() {
     untilDate: "2024-05-31"
   })
 
-  const questions = [
-    {
-      id: 1,
-      type: "multipleChoice",
-      question: "What is React?",
-      answers: [
-        { text: "A JavaScript framework", isCorrect: false },
-        { text: "A JavaScript library for building user interfaces", isCorrect: true },
-        { text: "A programming language", isCorrect: false },
-        { text: "A database management system", isCorrect: false }
-      ]
-    },
-    {
-      id: 2,
-      type: "trueFalse",
-      question: "JSX is a syntax extension for JavaScript used with React.",
-      answer: true
-    },
-    {
-      id: 3,
-      type: "fillInBlank",
-      question: "React is a _____ library for building user interfaces, developed by Facebook.",
-      answers: ["JavaScript"]
-    },
-    {
-      id: 4,
-      type: "multipleChoice",
-      question: "What are the key features of React?",
-      answers: [
-        { text: "Virtual DOM", isCorrect: true },
-        { text: "One-way data flow", isCorrect: true },
-        { text: "Two-way data binding", isCorrect: false },
-        { text: "SQL database integration", isCorrect: false }
-      ]
-    },
-    {
-      id: 5,
-      type: "trueFalse",
-      question: "Components in React are reusable pieces of code that describe how a part of the user interface should look.",
-      answer: true
-    },
-    {
-      id: 6,
-      type: "fillInBlank",
-      question: "_____ is a built-in object used to store data that affects a component's behavior and appearance in React.",
-      answers: ["State"]
-    },
-    {
-      id: 7,
-      type: "trueFalse",
-      question: "Props in React are read-only and passed from child to parent components.",
-      answer: false
-    }
-    // Add more questions as needed
-  ];
+  
 
-  // const {cid, qid} = useParams();
+  const findCourseQuizQuestions = async () => {
+    console.log(`${COURSES_API}/${courseId}/quizzes/${qid}/questions`)
+    const response = await axios.get(
+        `${COURSES_API}/${courseId}/quizzes/${qid}/questions`
+    );
+    console.log(response.data)
+    setQuestions(response.data);
+    console.log(questions)
+    setWait(true)
+};
 
-  const oaat = settings.oneQuestionAtATime;
+  const getQuizSettings = async () =>{
+    const response = await axios.get(
+      `${COURSES_API}/${courseId}/quizzes/${qid}/settings`
+  );
+  setSettings(response.data);
+  }
+  
+  const getQuiz = async () => {
+    const response = await axios.get(
+        `${COURSES_API}/${courseId}/quizzes/${qid}`
+    );
+    setQuiz(response.data);
+  }
+  
+ 
+  
 
   const previewQuestionsTF = () => {
     return <>
@@ -170,16 +139,20 @@ function QuizPreview() {
     )
   }
 
-  useEffect(() => {
+  const [wait, setWait] = useState(false)
 
-  })
+  useEffect(() => {
+    getQuiz()
+    getQuizSettings()
+    findCourseQuizQuestions()
+  },[])
 
   return (
-    <div>
-      <div >
-      {oaat ? oneAtATime() : allAtOnce()}
+    <div className="mt-4">
+      <div>
+      ({wait} ? {settings.oneQuestionAtATime ? oneAtATime() : allAtOnce()} : <div></div>)
       <button>Submit Quiz</button>
-      <Link to={`/Kanbas/Courses/${cid}/Quizzes/${qid}/Edit/Details`}><button>Keep Editing This Quiz</button></Link> 
+      <Link to={`/Kanbas/Courses/${courseId}/Quizzes/${qid}/Edit/Details`}><button>Keep Editing This Quiz</button></Link> 
       </div>
       <div className="Questions_List" style={{float: "right"}}>
       Questions

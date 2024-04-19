@@ -21,7 +21,7 @@ function Blank(props: { question: any; sendBack: any; editable: any;}) {
         <div>
             Answers:
             <br/>
-            {anss?.map((a, i) => <div><input onChange={(e) => setOneAnssText(i, e.target.value)} value={a}/><br/></div>)}
+            {anss?.map((a, i) => <div><input onChange={(e) => setOneAnssText(i, e.target.value)} value={a}/><button>Delete Answer</button><br/></div>)}
             <button className="mt-2 mb-1 ms-1" onClick={addAns} style={{borderRadius: "4px", backgroundColor: "green", color: "white"}}>+ Add Answer </button>
         </div>
         : 

@@ -1,5 +1,5 @@
 import { FaCheckCircle, FaEllipsisV } from "react-icons/fa";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FcCancel } from "react-icons/fc";
@@ -12,9 +12,20 @@ function Quizzes() {
 
     const { courseId } = useParams();
     const [quizzes, setQuizzes] = useState<any[]>([]);
+    const [settings, setSettings] = useState<any[]>([]);
+    const [qs, setQS] = useState<any[]>([]);
     const [quiz, setQuiz] = useState({
         id: "0", title: "New Quiz", course: "", published: false
     });
+
+    const combine = async () => {
+        const tempqs = []
+        for (let i = 0; i < quizzes.length; i++) {
+            const newqs = {quiz: {...quizzes[i]}, settings: {...settings[i]}}
+            tempqs.push(newqs)
+        }
+        setQS(tempqs)
+    }
 
     //Finding all quizzes of a particular course
     const findCourseQuizzes = async () => {
@@ -22,16 +33,27 @@ function Quizzes() {
             `${COURSES_API}/${courseId}/quizzes`
         );
         setQuizzes(response.data);
+
+        const response2 = await axios.get(
+            `${COURSES_API}/${courseId}/settings`
+        );
+        setSettings(response2.data)
+        // combine()
     };
+
     useEffect(() => {
         findCourseQuizzes();
+        // combine()
     }, []);
+
+    const navigate = useNavigate();
 
     const createQuiz = async () => {
         const response = await axios.post(
             `${COURSES_API}/${courseId}/quizzes`, quiz
         );
         setQuizzes([...quizzes, response.data]);
+        navigate(`/Kanbas/Courses/${courseId}/Quizzes/${response.data.id}/Edit/Details`)
     };
 
     const deleteQuiz = async (quizId: any) => {
@@ -42,16 +64,19 @@ function Quizzes() {
     };
 
     const updateQuizPublish = async (quizId: any) => {
-        // const response = await axios.get(
-        //     `${COURSES_API}/${courseId}/quizzes/${quizId}`
-        // );
-        // const quizToUpdate = response.data;
-        // const curPublished = quizToUpdate.published;
-        // quizToUpdate = {...quizToUpdate, published: curPublished}
-        
-        // const reponse2 = await axios.put(
+        const response = await axios.get(
+            `${COURSES_API}/${courseId}/quizzes/${quizId}`
+        );
 
-        // )
+        let quizToUpdate = response.data;
+
+        const curPublished = quizToUpdate.published;
+        
+        quizToUpdate = {...quizToUpdate, published: !curPublished}
+
+        const reponse2 = await axios.post(`${COURSES_API}/${courseId}/quizzes/${quizId}`, quizToUpdate)
+
+        findCourseQuizzes()
     }
 
     return (
@@ -71,11 +96,12 @@ function Quizzes() {
                         <FaEllipsisV className="me-2" /> ASSIGNMENT QUIZZES
                     </div>
                     <ul className="list-group">
-                        {quizzes.map((q) => (
+                        {quizzes.map((q,i) => (
                             <li className="list-group-item">
                                 <FaEllipsisV className="me-2" />
                                 <Link
                                     to={`${q.id}/Details`}>{q.title}</Link>
+                                {/* {settings[i].dueDate} */}
                                 <span className="float-end">
                                     <button onClick={() => updateQuizPublish(q.id)}>{q.published ? <FaCheckCircle style={{ color: "green" }} /> : <FcCancel />}</button>
                                     <button className="btn dropdown-toggle ms-1"
@@ -89,7 +115,7 @@ function Quizzes() {
                                             event.preventDefault();
                                             deleteQuiz(q._id);
                                         }}>Delete</button>
-                                        <button className="dropdown-item">Publish</button>
+                                        <button onClick={() => updateQuizPublish(q.id)} className="dropdown-item">{q.published ? "Unpublish": "Publish"}</button>
                                     </div></span>
                             </li>))}
                     </ul>

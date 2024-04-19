@@ -19,19 +19,26 @@ function QuizQuestionEditor(){
 
     const [questions, setQuestions] = useState<any[]>([])
 
-    const quiz = useSelector((state: KanbasState) =>
-        state.quizReducer.quiz);
+    const [quiz, setQuiz] = useState({
+      id: "0", title: "New Quiz", course: "", published: false});
 
-    const quizSettings = useSelector((state: KanbasState) =>
-        state.quizReducer.quizsettings);
-
-
-    // const [q, setQ] = useState( {
-    //     id: "0",
-    //     qzid: "0",
-    //     type: "multipleChoice",
-    //     question: "",
-    //     answers: []});
+    const [quizSettings, setSettings] = useState({
+      id: "0",
+      quizType: "Graded Quiz",
+      points: 100,
+      assignmentGroup: "Quizzes",
+      shuffleAnswers: true,
+      timeLimit: 20,
+      multipleAttempts: false,
+      showCorrectAnswers: true,
+      accessCode: "1234",
+      oneQuestionAtATime: true,
+      webcamRequired: false,
+      lockQuestionsAfterAnswering: false,
+      dueDate: "2024-05-15",
+      availableDate: "2024-04-10",
+      untilDate: "2024-05-31"
+  });
 
     const deleteQuestion = async (qqid : any) => {
       const response = await axios.delete(`${COURSES_API}/${cid}/quizzes/${qid}/questions/${qqid}`)
@@ -77,8 +84,24 @@ function QuizQuestionEditor(){
       );
       setQuestions(response.data);
   };
-    
+  
+  const getQuizSettings = async () =>{
+    const response = await axios.get(
+      `${COURSES_API}/${cid}/quizzes/${qid}/settings`
+  );
+  setSettings(response.data);
+  }
+  
+  const getQuiz = async () => {
+    const response = await axios.get(
+        `${COURSES_API}/${cid}/quizzes/${qid}`
+    );
+    setQuiz(response.data);
+  }
+  
     useEffect(() => {
+      getQuiz();
+      getQuizSettings();
       findCourseQuizQuestions();
     },[])
 
@@ -91,6 +114,9 @@ function QuizQuestionEditor(){
             <button className="mt-3 mb-2" style={{borderRadius: "4px"}} onClick={addNewQuestion}>+ New Question</button>
             <>
             {questions.map((q) => <QuestionTypes question={q} updateQuestion={updateQuestion} deleteQuestion={deleteQuestion}/>)}</>
+            <button>Cancel</button>
+            <button>Save & Publish</button>
+            <button>Save</button>
         </div>
     )
 } export default QuizQuestionEditor;

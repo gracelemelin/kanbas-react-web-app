@@ -15,8 +15,7 @@ function TrueFalse(props: { question: any; sendBack: any; editable : any}) {
                 Answer:
                 <br />
                 {tf ? "True" : "False"} <br/>
-                <input className="question" id="T" type="radio" name='TF' onClick={() => switchTF(true)}  /> <label htmlFor="T"> True </label> <br/>
-                <input className="question" id="F" type="radio" name='TF' onClick={() => switchTF(false)} defaultChecked/> <label htmlFor="F"> False </label>
+                <input className="question" id="T" type="checkbox" name='TF' onChange={(e) => switchTF(e.target.checked)} defaultChecked={tf}  /> <label htmlFor="T"> True </label> <br/>
             </div> 
             :
             

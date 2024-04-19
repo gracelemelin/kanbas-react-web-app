@@ -70,6 +70,8 @@ function QuestionTypes(props: { question: any; updateQuestion: any; deleteQuesti
             case "fillInBlank":
                 newq["type"] = "fillInBlank"
                 delete question.answers
+                delete question.answer
+                newq["answers"] = []
                 setTempQuestion(newq)
                 // updateQuestion()
                 renderSwitch(newq["type"])
@@ -77,6 +79,8 @@ function QuestionTypes(props: { question: any; updateQuestion: any; deleteQuesti
             default:
                 newq["type"] = "multipleChoice"
                 delete question.answer
+                delete question.answers
+                newq["answers"] = []
                 setTempQuestion(newq)
                 renderSwitch(newq["type"])
                 return;
@@ -93,20 +97,25 @@ function QuestionTypes(props: { question: any; updateQuestion: any; deleteQuesti
         setEditing(false);
     }
 
+    const updatePoints = async (points : any) => {
+        const newq = question
+        newq['points'] = points
+        setTempQuestion(newq)
+    }
 
     return (
         (editing ? 
             <div className="questionDisplay">
-                <select onChange={(e) => changeType(e.target.value)} defaultValue={question.type}>
+                <select onChange={(e) => changeType(e.target.value)} defaultValue={tempQuestion.type}>
                     <option value="multipleChoice">Multiple Choice</option>
                     <option value="trueFalse">True/False</option>
                     <option value="fillInBlank">Fill in the Blank</option>
                 </select> 
-                &nbsp;Points: <input type="number" defaultValue={1} />
+                &nbsp;Points: <input type="number" onChange={(e) => updatePoints(e.target.value)} defaultValue={tempQuestion.points} />
                 <hr/>
                 Enter your question.
-                <Editor apiKey="gsnm8akbzb409mao7s6d7oyxeg6d2gq6tkhh5k88lmlp4018" value={question.question} init={{height: 200, width: 600}}/>
-                {renderSwitch(question.type)} 
+                <Editor apiKey="gsnm8akbzb409mao7s6d7oyxeg6d2gq6tkhh5k88lmlp4018" value={tempQuestion.question} init={{height: 200, width: 600}}/>
+                {renderSwitch(tempQuestion.type)} 
                 <button className="ms-1" style={{borderRadius: "4px"}} onClick={() => {setEditing(false)}}>Cancel</button>
                 <button className="ms-1" style={{borderRadius: "4px"}} onClick={() => {save()}}>Update Question</button>
                 <button className="ms-1" style={{backgroundColor: "red", color: "white", borderRadius: "4px"}} onClick={() => {deleteQuestion(question._id)}}>Delete Question</button>
@@ -115,16 +124,12 @@ function QuestionTypes(props: { question: any; updateQuestion: any; deleteQuesti
              : 
             
              <div className="questionDisplay">
-             <select onChange={(e) => changeType(e.target.value)} defaultValue={question.type}>
-                 <option value="multipleChoice">Multiple Choice</option>
-                 <option value="trueFalse">True/False</option>
-                 <option value="fillInBlank">Fill in the Blank</option>
-             </select> 
-             &nbsp;Points: <input type="number" defaultValue={1} />
+             Question Type: {tempQuestion.type} <br/>
+             Points:{tempQuestion.points}
              <hr/>
              Enter your question.
-             <Editor apiKey="gsnm8akbzb409mao7s6d7oyxeg6d2gq6tkhh5k88lmlp4018" value={question.question} init={{height: 200, width: 600}}/>
-             {renderSwitch(question.type)} 
+             <Editor apiKey="gsnm8akbzb409mao7s6d7oyxeg6d2gq6tkhh5k88lmlp4018" value={tempQuestion.question} init={{height: 200, width: 600}}/>
+             {renderSwitch(tempQuestion.type)} 
              <button className="ms-1" style={{borderRadius: "4px"}} onClick={() => {setEditing(true)}}>Edit Question</button>
 
          </div>)

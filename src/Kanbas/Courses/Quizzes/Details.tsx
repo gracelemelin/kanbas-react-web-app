@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import { FaRegCheckCircle } from "react-icons/fa";
+import { FaCheckCircle, FaRegCheckCircle } from "react-icons/fa";
 import { FaPencil } from "react-icons/fa6";
 import { FaEllipsisV } from "react-icons/fa";
 import { useEffect, useState } from "react";
@@ -8,6 +8,8 @@ import "./Details.css";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setQuiz2, setQuizSettings2 } from "./reducer";
+import { FcCancel } from "react-icons/fc";
+import { TiCancelOutline } from "react-icons/ti";
 
 function Details() {
     const { courseId, qId } = useParams();
@@ -55,7 +57,21 @@ function Details() {
         dispatch(setQuizSettings2(response.data))
     }
 
+    
+    const updateQuizPublish = async () => {
 
+        let quizToUpdate = quiz;
+
+        const curPublished = quizToUpdate.published;
+        
+        quizToUpdate = {...quizToUpdate, published: !curPublished}
+
+
+        const response = await axios.post(`${COURSES_API}/${courseId}/quizzes/${quiz.id}`, quizToUpdate)
+
+        setQuiz(quizToUpdate)
+
+    }
 
     useEffect(() => {
         findQuiz();
@@ -65,7 +81,7 @@ function Details() {
     return (
         <div>
             <div className="pt-5 pe-2" style={{float: "right"}} >
-                <button className="btn btn-success"><FaRegCheckCircle /> Published</button>
+                <button className={quiz.published ? "btn btn-success" : "btn btn-danger"} onClick={updateQuizPublish}>{quiz.published ? <div><FaCheckCircle /> Published</div> : <div><TiCancelOutline /> Not Published</div> }</button>
                 <Link to={`/Kanbas/Courses/${courseId}/Quizzes/${qId}/Preview`}><button className="btn">Preview</button></Link> 
                 <Link to={`/Kanbas/Courses/${courseId}/Quizzes/${qId}/Edit/Details`}><button className="btn"><FaPencil /> Edit</button></Link> 
                 <button className="btn"><FaEllipsisV /></button>

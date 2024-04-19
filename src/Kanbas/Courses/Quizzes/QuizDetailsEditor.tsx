@@ -85,12 +85,12 @@ function QuizDetailsEditor() {
 
     return (
         <div className="mt-5">
-            Total Quiz Points: {quizSettings.points}
-            {quiz.published ? <FaCheckCircle style={{color: "green"}}/> : <FcCancel />}
-            <hr/>
+    
          <QuizEditorNav/>
          
-         Quiz Title: <input value={quiz.title} className="mt-2"/> <br/>
+         Quiz Title: <input defaultValue={quiz.title} className="mt-2"/> <br/>
+         Total Quiz Points: <input type="Number" min={0} max={100} defaultValue={quizSettings.points} onChange={(e) => setSettings({ ...quizSettings, points:  e.target.value })}/>
+         <br/>
          Quiz Instructions:
          <Editor apiKey="gsnm8akbzb409mao7s6d7oyxeg6d2gq6tkhh5k88lmlp4018"/> <br/>
          Quiz Type &nbsp;
@@ -109,9 +109,14 @@ function QuizDetailsEditor() {
          </select> <br/>
          Options <br/>
          <input defaultChecked={quizSettings.shuffleAnswers} type="checkbox" onChange={(e) => setSettings({ ...quizSettings, shuffleAnswers: !quizSettings.shuffleAnswers })}/>Shuffle Answers <br/>
-         <input defaultChecked={quizSettings.multipleAttempts} type="checkbox"onChange={(e) => setSettings({ ...quizSettings, multipleAttempts:  e.target.value })}/> Allow Multiple Attempts <br/>
-         <input className="mb-2" type="checkbox"/> Time Limit &nbsp;<input value={quizSettings.timeLimit} onChange={(e) => setSettings({ ...quizSettings, timeLimit:  e.target.value })}/> Minutes
+         <input defaultChecked={quizSettings.multipleAttempts} type="checkbox"onChange={(e) => setSettings({ ...quizSettings, multipleAttempts:  !quizSettings.multipleAttempts })}/> Allow Multiple Attempts <br/>
+         <input className="mb-2" type="checkbox"/> Time Limit &nbsp;<input type="Number" min={0} max={240} defaultValue={quizSettings.timeLimit} onChange={(e) => setSettings({ ...quizSettings, timeLimit:  e.target.value })}/> Minutes
          <br/>
+         <input defaultChecked={quizSettings.showCorrectAnswers} type="checkbox" onChange={(e) => setSettings({ ...quizSettings, showCorrectAnswers: !quizSettings.showCorrectAnswers })}/>Show Correct Answers <br/>
+         <input defaultValue={quizSettings.accessCode} type="text" onChange={(e) => setSettings({ ...quizSettings, accessCode: quizSettings.accessCode })}/>Access Code <br/>
+         <input defaultChecked={quizSettings.oneQuestionAtATime} type="checkbox" onChange={(e) => setSettings({ ...quizSettings, oneQuestionAtATime: !quizSettings.oneQuestionAtATime })}/>One Question At A Time <br/>
+         <input defaultChecked={quizSettings.webcamRequired} type="checkbox" onChange={(e) => setSettings({ ...quizSettings, webcamRequired: !quizSettings.webcamRequired })}/>Webcam Required<br/>
+         <input defaultChecked={quizSettings.lockQuestionsAfterAnswering} type="checkbox" onChange={(e) => setSettings({ ...quizSettings, lockQuestionsAfterAnswering: !quizSettings.lockQuestionsAfterAnswering })}/>Lock Questions After Answering<br/>
          <div>
           Due <br/>
           <input value={gettDateForInput(quizSettings.dueDate)} type="date" onChange={(e) => setSettings({ ...quizSettings, dueDate:  e.target.value })}/><br/>
