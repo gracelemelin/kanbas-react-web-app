@@ -80,6 +80,7 @@ function QuizPreview() {
   
   const updateAnswerQMC = async (q : any, mc : any) => {
     const newq = {...q}
+    console.log()
     const uas = newq["userAnswers"].filter((ua : any) => ua.userId !== user.id)
     newq["userAnswers"] = [...uas, {"userId" : user.id, "answer": mc}]
     const response = await axios.put(
@@ -135,7 +136,7 @@ function QuizPreview() {
       const userAnsObj = userAnswers.filter((ua : any) => ua.userId === user.id)[0]
       console.log(userAnsObj)
       if (userAnsObj) {
-        userAns = String(userAnsObj.answer)
+        userAns = userAnsObj.answer
         bool = true
       }
     }

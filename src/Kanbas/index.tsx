@@ -7,6 +7,7 @@ import store from "./store";
 import { Provider } from "react-redux";
 import axios from "axios";
 import Account from "./Account";
+import * as client from "../Users/client"
 
 const API_BASE = process.env.REACT_APP_API_BASE;
 
@@ -50,23 +51,20 @@ function Kanbas() {
   };
 
   const findAllCourses = async () => {
-    const currUser = await axios.post(`${API_BASE}/api/users/profile`);
+    const currUser = await client.profile();
+    console.log(currUser)
 
     const response = await axios.get(COURSES_API);
     let courses = response.data
 
-    if (currUser.data) {
-      const userCoursesId = currUser.data.courses
+    if (currUser) {
+      const userCoursesId = currUser.courses
 
       courses = courses.filter((c: any) => {
-     
         return userCoursesId.find((e: any)=> {
-   
         return e === c.id;})})
     }
-
     setCourses(courses);
-
   };
   useEffect(() => {
     findAllCourses();

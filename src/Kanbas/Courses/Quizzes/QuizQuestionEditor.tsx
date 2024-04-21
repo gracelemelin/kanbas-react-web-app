@@ -4,14 +4,15 @@ import { FcCancel } from "react-icons/fc";
 import QuestionTypes from "./QuestionTypes";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function QuizQuestionEditor() {
+  const navigate = useNavigate()
 
   const API_BASE = process.env.REACT_APP_API_BASE;
   const COURSES_API = `${API_BASE}/api/courses`;
 
-  const { cid, qid } = useParams()
+  const { courseId, qid } = useParams()
 
   const [questions, setQuestions] = useState<any[]>([])
 
@@ -78,21 +79,21 @@ function QuizQuestionEditor() {
 
   const findCourseQuizQuestions = async () => {
     const response = await axios.get(
-      `${COURSES_API}/${cid}/quizzes/${qid}/questions`
+      `${COURSES_API}/${courseId}/quizzes/${qid}/questions`
     );
     setQuestions(response.data);
   };
 
   const getQuizSettings = async () => {
     const response = await axios.get(
-      `${COURSES_API}/${cid}/quizzes/${qid}/settings`
+      `${COURSES_API}/${courseId}/quizzes/${qid}/settings`
     );
     setSettings(response.data);
   }
 
   const handleSaveQuestions = async () => {
     const response = await axios.get(
-      `${COURSES_API}/${cid}/quizzes/${qid}/questions`
+      `${COURSES_API}/${courseId}/quizzes/${qid}/questions`
     );
 
     const allBackEndQuestions = response.data
@@ -102,17 +103,17 @@ function QuizQuestionEditor() {
       return element.id === q.id;})})
 
     deletedQuestions.forEach(async(q : any) => {
-      const response = await axios.delete(`${COURSES_API}/${cid}/quizzes/${qid}/questions/${q.id}`)
+      const response = await axios.delete(`${COURSES_API}/${courseId}/quizzes/${qid}/questions/${q.id}`)
     })
     
     questions.forEach(async(q) => {
       if (q._id) {
       const response = await axios.put(
-        `${COURSES_API}/${cid}/quizzes/${qid}/questions/${q.id}`, q)
+        `${COURSES_API}/${courseId}/quizzes/${qid}/questions/${q.id}`, q)
       }
       else {
         const response = await axios.post(
-          `${COURSES_API}/${cid}/quizzes/${qid}/questions`, q)
+          `${COURSES_API}/${courseId}/quizzes/${qid}/questions`, q)
       }
 
     })
@@ -122,46 +123,53 @@ function QuizQuestionEditor() {
   const handleSave = async () => {
     const newQuiz = { ...quiz, numQuestions: questions.length }
     const qresponse = await axios.post(
-        `${COURSES_API}/${cid}/quizzes/${qid}`, newQuiz
+        `${COURSES_API}/${courseId}/quizzes/${qid}`, newQuiz
     );
 
     // save quiz settings
     const pts = questions.reduce((sum, el) => sum += Number(el.points), 0);
     const newSetting = { ...quizSettings, points: Number(pts)}
     const sresponse = await axios.post(
-        `${COURSES_API}/${cid}/quizzes/${qid}/settings`, newSetting
+        `${COURSES_API}/${courseId}/quizzes/${qid}/settings`, newSetting
     );
 
     setQuiz(newQuiz)
     setSettings(newSetting)
     await handleSaveQuestions()
+    navigate(`/Kanbas/Courses/${courseId}/Quizzes/${qid}/Details`)
   };
 
+
+  const cancel = async () => {
+    findCourseQuizQuestions()
+    navigate(`/Kanbas/Courses/${courseId}/Quizzes`)
+  }
 
 
   const handleSaveAndPublish = async () => {
     // save quiz
     const newQuiz = { ...quiz, published: true, numQuestions: questions.length }
     const qresponse = await axios.post(
-      `${COURSES_API}/${cid}/quizzes/${qid}`, newQuiz
+      `${COURSES_API}/${courseId}/quizzes/${qid}`, newQuiz
     );
 
     // save quiz settings
     const pts = questions.reduce((sum, el) => sum += Number(el.points), 0);
     const newSetting = { ...quizSettings, points: Number(pts)}
     const sresponse = await axios.post(
-        `${COURSES_API}/${cid}/quizzes/${qid}/settings`, newSetting
+        `${COURSES_API}/${courseId}/quizzes/${qid}/settings`, newSetting
     );
 
 
     setQuiz(newQuiz)
     setSettings(newSetting)
     await handleSaveQuestions()
+    navigate(`/Kanbas/Courses/${courseId}/Quizzes`)
   };
 
   const getQuiz = async () => {
     const response = await axios.get(
-      `${COURSES_API}/${cid}/quizzes/${qid}`
+      `${COURSES_API}/${courseId}/quizzes/${qid}`
     );
     setQuiz(response.data);
   }
@@ -181,7 +189,7 @@ function QuizQuestionEditor() {
       <button className="mt-3 mb-2" style={{ borderRadius: "4px" }} onClick={addNewQuestion}>+ New Question</button>
       <>
         {questions.map((q) => <QuestionTypes question={q} updateQuestion={updateQuestion} deleteQuestion={deleteQuestion} />)}</>
-      <button className="mb-2 me-2" style={{ borderRadius: "4px" }} onClick={() => findCourseQuizQuestions()}>Cancel</button>
+      <button className="mb-2 me-2" style={{ borderRadius: "4px" }} onClick={() => cancel()}>Cancel</button>
       <button style={{ borderRadius: "4px" }} className="mb-2 me-1" onClick={() => handleSaveAndPublish()}>Save & Publish</button>
       <button className="mb-2" style={{ backgroundColor: "red", color: "white", borderRadius: "4px" }} onClick={() => handleSave()}>Save</button>
     </div>
