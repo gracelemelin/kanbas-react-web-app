@@ -6,7 +6,7 @@ import * as client from "../../../Users/client";
 
 function QuizPreview() {
 
-  let time = new Date().getTime().toString()
+  const [time, setTime] = useState(new Date().getTime().toString())
 
   const {courseId, qid} = useParams();
 

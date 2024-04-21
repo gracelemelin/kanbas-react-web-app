@@ -68,7 +68,7 @@ function Kanbas() {
   };
   useEffect(() => {
     findAllCourses();
-  }, []);
+  }, [mycourses]);
 
 
   const deleteCourse = async (courseId: any) => {

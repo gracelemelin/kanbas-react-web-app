@@ -17,26 +17,14 @@ function Quizzes() {
         id: "0", title: "New Quiz", course: "", published: false, numQuestions: 0
     });
 
-    const zip = async (a1 : any[],a2 : any[]) => {
-        const res = a1.map((x, i) => [x, a2[i]]); 
-        setQS(res)
-        return res
-    }
-
     //Finding all quizzes of a particular course
     const findCourseQuizzes = async () => {
-        const response = await axios.get(
-            `${COURSES_API}/${courseId}/quizzes`
+        
+        const res = await axios.get(
+            `${COURSES_API}/${courseId}/quizzesAndSettings`
         );
-        setQuizzes(response.data);
 
-        const response2 = await axios.get(
-            `${COURSES_API}/${courseId}/settings`
-        );
-        setSettings(response2.data)
-
-        const res = await zip(response.data, response2.data)
-        console.log(res)
+        setQS(res.data)
     };
 
     useEffect(() => {
