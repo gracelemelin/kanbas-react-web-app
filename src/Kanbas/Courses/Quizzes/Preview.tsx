@@ -1,10 +1,8 @@
-import { useSelector } from "react-redux";
-import { KanbasState } from "../../store";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import MultChoice from "./QuestionTypes/MultChoice";
 import "./Preview.css"
 import axios from "axios";
+import * as client from "../../../Users/client";
 
 function QuizPreview() {
 
@@ -14,10 +12,12 @@ function QuizPreview() {
 
   const [i, seti] = useState(0)
 
+  const [user, setUser] = useState<any>()
+
   const [questions, setQuestions] = useState<any[]>([])
 
   const [quiz, setQuiz] = useState<any>({
-    id: "0", title: "New Quiz", course: "", published: false
+    id: "0", title: "New Quiz", course: "", published: false, numQuestions: 0
   });
 
   const API_BASE = process.env.REACT_APP_API_BASE;
@@ -48,10 +48,7 @@ function QuizPreview() {
     const response = await axios.get(
         `${COURSES_API}/${courseId}/quizzes/${qid}/questions`
     );
-    console.log(response.data)
     setQuestions(response.data);
-    console.log(questions)
-    setWait(true)
 };
 
   const getQuizSettings = async () =>{
@@ -68,34 +65,95 @@ function QuizPreview() {
     setQuiz(response.data);
   }
   
- 
+  const updateAnswerQTF = async (q : any, tf : any) => {
+    const newq = {...q}
+    const uas = newq["userAnswers"].filter((ua : any) => ua.userId !== user.id)
+    newq["userAnswers"] = [...uas, {"userId" : user.id, "answer": tf}]
+    const response = await axios.put(
+     `${COURSES_API}/${courseId}/quizzes/${qid}/questions/${q.id}`, newq
+    );
   
+  findCourseQuizQuestions()
+  
+  }
 
-  const previewQuestionsTF = () => {
+  
+  const updateAnswerQMC = async (q : any, mc : any) => {
+    const newq = {...q}
+    const uas = newq["userAnswers"].filter((ua : any) => ua.userId !== user.id)
+    newq["userAnswers"] = [...uas, {"userId" : user.id, "answer": mc}]
+    const response = await axios.put(
+     `${COURSES_API}/${courseId}/quizzes/${qid}/questions/${q.id}`, newq
+    );
+    console.log(newq)
+  findCourseQuizQuestions()
+  
+  }
+
+  
+  const updateAnswerQB = async (q : any, b : any) => {
+    const newq = {...q}
+    const uas = newq["userAnswers"].filter((ua : any) => ua.userId !== user.id)
+    newq["userAnswers"] = [...uas, {"userId" : user.id, "answer": b}]
+    const response = await axios.put(
+     `${COURSES_API}/${courseId}/quizzes/${qid}/questions/${q.id}`, newq
+    );
+    console.log(newq)
+  
+  findCourseQuizQuestions()
+  
+  }
+
+
+  const previewQuestionsTF = (question: any) => {
+    const userAnswers = question.userAnswers
+    let bool = false
+    let userAns = false
+    if (user) {
+      const userAnsObj = userAnswers.filter((ua : any) => ua.userId === user.id)[0]
+      if (userAnsObj) {
+        userAns = userAnsObj.answer
+        bool = true
+      }
+    }
     return <>
     <hr/>
-      <input className="question" id="T" type="radio" name='TF' /> <label htmlFor="T"> True </label><br/>
+      <input className="question" id="T" type="radio" name='TF' onChange={(e) => updateAnswerQTF(question, e.target.checked)} defaultChecked={bool && userAns}/> <label htmlFor="T"> True </label><br/>
       <hr/>
-      <input className="question" id="F" type="radio" name='TF' /> <label htmlFor="F"> False </label>
+      <input className="question" id="F" type="radio" name='TF' onChange={(e) => updateAnswerQTF(question, !e.target.checked)} defaultChecked={bool && !userAns}/> <label htmlFor="F"> False </label>
     </>
   }
 
-  const previewQuestionsMCB = (qas: any, type: any) => {
+  const previewQuestionsMCB = (question : any) => {
+    const answers = question.answers
+    const type = question.type
+    const userAnswers = question.userAnswers
+
+    let bool = false
+    let userAns = "";
+    if (user) {
+      const userAnsObj = userAnswers.filter((ua : any) => ua.userId === user.id)[0]
+      console.log(userAnsObj)
+      if (userAnsObj) {
+        userAns = String(userAnsObj.answer)
+        bool = true
+      }
+    }
     switch (type) {
       case "multipleChoice":
         return <>
-          {qas?.map((qa: any) => (
+          {answers?.map((qa: any, iii : any) => (
             <div>
               <hr/>
-              <input type="checkbox" /><label>{qa.text}</label>
+              <input type="radio" name={`q${qa.id}`} onChange={(e) => updateAnswerQMC(question, iii)} defaultChecked={bool && iii === Number(userAns)}/><label>{qa.text}</label>
             </div>
           ))}</>
       case "fillInBlank":
         return <>
-          {qas?.map((qa: any) => (
+          {answers?.map((qa: any) => (
             <div>
               <hr/>
-              <input type="text" />
+              <input type="text" onChange={(e) => updateAnswerQB(question, e.target.value)} defaultValue={userAns}/>
             </div>
           ))}
         </>
@@ -109,10 +167,10 @@ function QuizPreview() {
       <div>
         {questions.map((q, i) => (
           <div>
-            Question {i}
-            Points 1
+            Question {i + 1}
+            Points {q.points}
             {q.question}
-            {q.type === "trueFalse" ? previewQuestionsTF() : previewQuestionsMCB(q.answers, q.type)}
+            {q.type === "trueFalse" ? previewQuestionsTF(q) : previewQuestionsMCB(q)}
           </div>
         ))}
       </div>
@@ -121,27 +179,39 @@ function QuizPreview() {
 
 
   const oneAtATime = () => {
-    let q = questions[i]
+    const tempqs = questions.filter((_, index) => index === i);
+
+    
+
     return (
-      <div style={{height : "50%", width : "50hx"}}>
-        <div>
-        Quiz Started: {time} <br />
-          <div style={{backgroundColor: "lightgray"}}>
-          Question {i + 1}
-          Points 1 <br />
+      <div style={{height : "50%", width : "50hx"}}>        
+        {tempqs.map((q) => (
+          <div>
+            <div>
+              Quiz Started: {time} <br />
+                <div style={{backgroundColor: "lightgray"}}>
+                Question {i + 1}
+                Points {q.points} <br />
+                </div>
+                {q.question}
+                {q.type === "trueFalse" ? previewQuestionsTF(q) : previewQuestionsMCB(q)}
+              </div>
+
+              {i < 1 ? <div></div> : <button onClick={() => seti(i - 1)}> Prev </button>}
+              {i >= questions.length-1 ? <div></div> : <button onClick={() => { seti(i + 1) }}> Next </button>}
           </div>
-          {q.question}
-          {q.type === "trueFalse" ? previewQuestionsTF() : previewQuestionsMCB(q.answers, q.type)}
-        </div>
-        {i >= questions.length ? <div></div> : <button onClick={() => { seti(i + 1) }}> Next </button>}
-        {i < 1 ? <div></div> : <button onClick={() => seti(i - 1)}> Prev </button>}
+        ))}
       </div>
     )
   }
 
-  const [wait, setWait] = useState(false)
+  const getUser = async () => {
+    const res = await client.profile();
+    setUser(res)
+  }
 
   useEffect(() => {
+    getUser()
     getQuiz()
     getQuizSettings()
     findCourseQuizQuestions()
@@ -150,8 +220,9 @@ function QuizPreview() {
   return (
     <div className="mt-4">
       <div>
-      ({wait} ? {settings.oneQuestionAtATime ? oneAtATime() : allAtOnce()} : <div></div>)
-      <button>Submit Quiz</button>
+      {settings.oneQuestionAtATime ? oneAtATime() : allAtOnce()}
+      
+      <Link to={`/Kanbas/Courses/${courseId}/Quizzes/${qid}/Details`}><button>Submit Quiz</button></Link> 
       <Link to={`/Kanbas/Courses/${courseId}/Quizzes/${qid}/Edit/Details`}><button>Keep Editing This Quiz</button></Link> 
       </div>
       <div className="Questions_List" style={{float: "right"}}>

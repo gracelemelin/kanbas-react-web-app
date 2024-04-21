@@ -1,8 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import QuizEditorNav from "./QuizEditorNav";
 import { KanbasState } from "../../store";
-import { FcCancel } from "react-icons/fc";
-import { FaCheckCircle } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { setQuiz2, setQuizSettings2 } from "./reducer";
@@ -44,6 +42,10 @@ function QuizDetailsEditor() {
 
     const navigate = useNavigate();
     const handleSave = async () => {
+        const qresponse = await axios.post(
+            `${COURSES_API}/${courseId}/quizzes/${qid}`, quiz
+        );
+
         const response = await axios.post(
             `${COURSES_API}/${courseId}/quizzes/${qid}/settings`, quizSettings
         );
@@ -83,16 +85,36 @@ function QuizDetailsEditor() {
         findSettings();
     }, []);
 
+    const handleDescChange = (content : any, editor : any) => {
+        setSettings({...setSettings, description: content.substring(3, content.length - 4)})
+     }
+
     return (
         <div className="mt-5">
     
          <QuizEditorNav/>
          
-         Quiz Title: <input defaultValue={quiz.title} className="mt-2"/> <br/>
+         Quiz Title: <input defaultValue={quiz.title} className="mt-2" onChange={(e) => setQuiz({ ...quiz, title: e.target.value })}/> <br/>
          Total Quiz Points: <input type="Number" min={0} max={100} defaultValue={quizSettings.points} onChange={(e) => setSettings({ ...quizSettings, points:  e.target.value })}/>
          <br/>
          Quiz Instructions:
-         <Editor apiKey="gsnm8akbzb409mao7s6d7oyxeg6d2gq6tkhh5k88lmlp4018"/> <br/>
+         <Editor apiKey="gsnm8akbzb409mao7s6d7oyxeg6d2gq6tkhh5k88lmlp4018" value={quizSettings.description}
+         init={{
+            height: 500,
+            menubar: false,
+            plugins: [
+              'advlist autolink lists link image charmap print preview anchor',
+              'searchreplace visualblocks code fullscreen',
+              'insertdatetime media table paste code help wordcount'
+            ],
+            toolbar:
+              'undo redo | formatselect | ' +
+              'bold italic backcolor | alignleft aligncenter ' +
+              'alignright alignjustify | bullist numlist outdent indent | ' +
+              'removeformat | help'
+          }}
+          onEditorChange={handleDescChange}/>
+         <br/>
          Quiz Type &nbsp;
          <select value={quizSettings.quizType} onChange={(e) => setSettings({ ...quizSettings, quizType: e.target.value })}>
                 <option>Graded Quiz</option>
@@ -108,18 +130,18 @@ function QuizDetailsEditor() {
                 <option>Projects</option>
          </select> <br/>
          Options <br/>
-         <input defaultChecked={quizSettings.shuffleAnswers} type="checkbox" onChange={(e) => setSettings({ ...quizSettings, shuffleAnswers: !quizSettings.shuffleAnswers })}/>Shuffle Answers <br/>
-         <input defaultChecked={quizSettings.multipleAttempts} type="checkbox"onChange={(e) => setSettings({ ...quizSettings, multipleAttempts:  !quizSettings.multipleAttempts })}/> Allow Multiple Attempts <br/>
+         <input defaultChecked={quizSettings.shuffleAnswers} type="checkbox" onChange={(e) => setSettings({ ...quizSettings, shuffleAnswers: e.target.checked })}/>Shuffle Answers <br/>
+         <input defaultChecked={quizSettings.multipleAttempts} type="checkbox"onChange={(e) => setSettings({ ...quizSettings, multipleAttempts:  e.target.checked })}/> Allow Multiple Attempts <br/>
          <input className="mb-2" type="checkbox"/> Time Limit &nbsp;<input type="Number" min={0} max={240} defaultValue={quizSettings.timeLimit} onChange={(e) => setSettings({ ...quizSettings, timeLimit:  e.target.value })}/> Minutes
          <br/>
-         <input defaultChecked={quizSettings.showCorrectAnswers} type="checkbox" onChange={(e) => setSettings({ ...quizSettings, showCorrectAnswers: !quizSettings.showCorrectAnswers })}/>Show Correct Answers <br/>
-         <input defaultValue={quizSettings.accessCode} type="text" onChange={(e) => setSettings({ ...quizSettings, accessCode: quizSettings.accessCode })}/>Access Code <br/>
-         <input defaultChecked={quizSettings.oneQuestionAtATime} type="checkbox" onChange={(e) => setSettings({ ...quizSettings, oneQuestionAtATime: !quizSettings.oneQuestionAtATime })}/>One Question At A Time <br/>
-         <input defaultChecked={quizSettings.webcamRequired} type="checkbox" onChange={(e) => setSettings({ ...quizSettings, webcamRequired: !quizSettings.webcamRequired })}/>Webcam Required<br/>
-         <input defaultChecked={quizSettings.lockQuestionsAfterAnswering} type="checkbox" onChange={(e) => setSettings({ ...quizSettings, lockQuestionsAfterAnswering: !quizSettings.lockQuestionsAfterAnswering })}/>Lock Questions After Answering<br/>
+         <input defaultChecked={quizSettings.showCorrectAnswers} type="checkbox" onChange={(e) => setSettings({ ...quizSettings, showCorrectAnswers: e.target.checked })}/>Show Correct Answers <br/>
+         <input defaultValue={quizSettings.accessCode} type="text" onChange={(e) => setSettings({ ...quizSettings, accessCode: e.target.value })}/>Access Code <br/>
+         <input defaultChecked={quizSettings.oneQuestionAtATime} type="checkbox" onChange={(e) => setSettings({ ...quizSettings, oneQuestionAtATime: e.target.checked })}/>One Question At A Time <br/>
+         <input defaultChecked={quizSettings.webcamRequired} type="checkbox" onChange={(e) => setSettings({ ...quizSettings, webcamRequired: e.target.checked })}/>Webcam Required<br/>
+         <input defaultChecked={quizSettings.lockQuestionsAfterAnswering} type="checkbox" onChange={(e) => setSettings({ ...quizSettings, lockQuestionsAfterAnswering: e.target.checked })}/>Lock Questions After Answering<br/>
          <div>
           Due <br/>
-          <input value={gettDateForInput(quizSettings.dueDate)} type="date" onChange={(e) => setSettings({ ...quizSettings, dueDate:  e.target.value })}/><br/>
+          <input value={gettDateForInput(quizSettings.dueDate)} type="date" onChange={(e) => setSettings({ ...quizSettings, dueDate: e.target.value })}/><br/>
           Available From <br/>
           <input value={quizSettings.availableDate} type="date"onChange={(e) => setSettings({ ...quizSettings, availableDate:  e.target.value })} /><br/>
           Until <br/>

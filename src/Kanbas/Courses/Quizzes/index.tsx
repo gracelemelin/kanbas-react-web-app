@@ -3,7 +3,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FcCancel } from "react-icons/fc";
-import Details from "./Details";
 import 'bootstrap/dist/js/bootstrap.js';
 
 function Quizzes() {
@@ -15,16 +14,13 @@ function Quizzes() {
     const [settings, setSettings] = useState<any[]>([]);
     const [qs, setQS] = useState<any[]>([]);
     const [quiz, setQuiz] = useState({
-        id: "0", title: "New Quiz", course: "", published: false
+        id: "0", title: "New Quiz", course: "", published: false, numQuestions: 0
     });
 
-    const combine = async () => {
-        const tempqs = []
-        for (let i = 0; i < quizzes.length; i++) {
-            const newqs = {quiz: {...quizzes[i]}, settings: {...settings[i]}}
-            tempqs.push(newqs)
-        }
-        setQS(tempqs)
+    const zip = async (a1 : any[],a2 : any[]) => {
+        const res = a1.map((x, i) => [x, a2[i]]); 
+        setQS(res)
+        return res
     }
 
     //Finding all quizzes of a particular course
@@ -38,12 +34,13 @@ function Quizzes() {
             `${COURSES_API}/${courseId}/settings`
         );
         setSettings(response2.data)
-        // combine()
+
+        const res = await zip(response.data, response2.data)
+        console.log(res)
     };
 
     useEffect(() => {
         findCourseQuizzes();
-        // combine()
     }, []);
 
     const navigate = useNavigate();
@@ -52,7 +49,8 @@ function Quizzes() {
         const response = await axios.post(
             `${COURSES_API}/${courseId}/quizzes`, quiz
         );
-        setQuizzes([...quizzes, response.data]);
+
+        await findCourseQuizzes()
         navigate(`/Kanbas/Courses/${courseId}/Quizzes/${response.data.id}/Edit/Details`)
     };
 
@@ -60,7 +58,8 @@ function Quizzes() {
         const response = await axios.delete(
             `${COURSES_API}/${courseId}/quizzes/${quizId}`
         );
-        setQuizzes(quizzes.filter((q) => q._id !== quizId));
+
+        await findCourseQuizzes()
     };
 
     const updateQuizPublish = async (quizId: any) => {
@@ -76,7 +75,7 @@ function Quizzes() {
 
         const reponse2 = await axios.post(`${COURSES_API}/${courseId}/quizzes/${quizId}`, quizToUpdate)
 
-        findCourseQuizzes()
+        await findCourseQuizzes()
     }
 
     return (
@@ -96,26 +95,26 @@ function Quizzes() {
                         <FaEllipsisV className="me-2" /> ASSIGNMENT QUIZZES
                     </div>
                     <ul className="list-group">
-                        {quizzes.map((q,i) => (
+                        {qs.map((q) => (
                             <li className="list-group-item">
                                 <FaEllipsisV className="me-2" />
                                 <Link
-                                    to={`${q.id}/Details`}>{q.title}</Link>
-                                {/* {settings[i].dueDate} */}
+                                    to={`${q[0].id}/Details`}>{q[0].title}</Link><br/>
+                                {q[1].dueDate}{q[1].availableDate}{q[1].points}{q[0].numQuestions}
                                 <span className="float-end">
-                                    <button onClick={() => updateQuizPublish(q.id)}>{q.published ? <FaCheckCircle style={{ color: "green" }} /> : <FcCancel />}</button>
+                                    <button onClick={() => updateQuizPublish(q[0].id)}>{q[0].published ? <FaCheckCircle style={{ color: "green" }} /> : <FcCancel />}</button>
                                     <button className="btn dropdown-toggle ms-1"
                                         type="button"
                                         style={{ borderRadius: "4px" }}
                                         id="dropdownMenuButton"
                                         data-bs-toggle="dropdown"><FaEllipsisV /></button>
                                     <div className="dropdown-menu" aria-bs-labelledby="dropdownMenuButton">
-                                        <Link to={`/Kanbas/Courses/${courseId}/Quizzes/${q.id}/Edit/Details`}><button className="dropdown-item">Edit</button></Link>
+                                        <Link to={`/Kanbas/Courses/${courseId}/Quizzes/${q[0].id}/Edit/Details`}><button className="dropdown-item">Edit</button></Link>
                                         <button className="dropdown-item" onClick={(event) => {
                                             event.preventDefault();
-                                            deleteQuiz(q._id);
+                                            deleteQuiz(q[0].id);
                                         }}>Delete</button>
-                                        <button onClick={() => updateQuizPublish(q.id)} className="dropdown-item">{q.published ? "Unpublish": "Publish"}</button>
+                                        <button onClick={() => updateQuizPublish(q[0].id)} className="dropdown-item">{q[0].published ? "Unpublish": "Publish"}</button>
                                     </div></span>
                             </li>))}
                     </ul>

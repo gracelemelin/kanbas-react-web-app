@@ -71,7 +71,6 @@ function Courses() {
             <Route path="Grades" element={<h1>Grades</h1>} />
             <Route path="Quizzes" element={<Quizzes />} />
             <Route path="Quizzes/:qId/Details" element={<Details />} />
-            {/* <Route path="Quizzes/:qId/Details/Edit" element={<Navigate to="Quizzes/:qid/Edit/Details" />} /> */}
             <Route path="Quizzes/:qid/Edit/Details" element={<QuizDetailsEditor />} />
             <Route path="Quizzes/:qid/Edit/Questions" element={<QuizQuestionEditor/>} />
             <Route path="Quizzes/:qid/Preview" element={<QuizPreview/>} />

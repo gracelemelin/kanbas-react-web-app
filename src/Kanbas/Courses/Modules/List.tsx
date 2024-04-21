@@ -96,7 +96,7 @@ function ModuleList() {
               <button
                 className="btn btn-danger float-end p-1 mt-1 me-1"
                 style={{ borderRadius: "4px" }}
-                onClick={() => handleDeleteModule(module.__id)}>
+                onClick={() => handleDeleteModule(module._id)}>
                 Delete
               </button>
               <div>

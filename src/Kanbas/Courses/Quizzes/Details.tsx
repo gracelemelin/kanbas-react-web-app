@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import { FaCheckCircle, FaRegCheckCircle } from "react-icons/fa";
+import { FaCheckCircle } from "react-icons/fa";
 import { FaPencil } from "react-icons/fa6";
 import { FaEllipsisV } from "react-icons/fa";
 import { useEffect, useState } from "react";
@@ -8,7 +8,6 @@ import "./Details.css";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setQuiz2, setQuizSettings2 } from "./reducer";
-import { FcCancel } from "react-icons/fc";
 import { TiCancelOutline } from "react-icons/ti";
 
 function Details() {
@@ -18,11 +17,11 @@ function Details() {
     const dispatch = useDispatch();
 
     const [quiz, setQuiz] = useState<any>({
-        _id: "0", title: "New Quiz", course: "", published: false
+        id: "0", title: "New Quiz", course: "", published: false, numQuestions: 0
     });
 
     const [settings, setSettings] = useState<any>({
-        _id: "0",
+        id: "0",
         quizType: "Graded Quiz",
         points: 100,
         assignmentGroup: "Quizzes",
