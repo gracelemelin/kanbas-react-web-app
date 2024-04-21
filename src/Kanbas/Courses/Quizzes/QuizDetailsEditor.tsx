@@ -133,7 +133,8 @@ function QuizDetailsEditor() {
          Options <br/>
          <input defaultChecked={quizSettings.shuffleAnswers} type="checkbox" onChange={(e) => setSettings({ ...quizSettings, shuffleAnswers: e.target.checked })}/>Shuffle Answers <br/>
          <input defaultChecked={quizSettings.multipleAttempts} type="checkbox"onChange={(e) => setSettings({ ...quizSettings, multipleAttempts:  e.target.checked })}/> Allow Multiple Attempts <br/>
-         <input className="mb-2" type="checkbox"/> Time Limit &nbsp;<input type="Number" min={0} max={240} defaultValue={quizSettings.timeLimit} onChange={(e) => setSettings({ ...quizSettings, timeLimit:  e.target.value })}/> Minutes
+         <input className="mb-2" type="checkbox" defaultChecked={quizSettings.timeLimit.boolean} onChange={(e) => setSettings({ ...quizSettings, timeLimit: {...quizSettings.timeLimit, boolean : e.target.checked}})}/> 
+         Time Limit &nbsp;<input type="Number" min={0} max={240} defaultValue={quizSettings.timeLimit.time} onChange={(e) => setSettings({ ...quizSettings, timeLimit: {...quizSettings.timeLimit, time : e.target.value}})}/> Minutes
          <br/>
          <input defaultChecked={quizSettings.showCorrectAnswers} type="checkbox" onChange={(e) => setSettings({ ...quizSettings, showCorrectAnswers: e.target.checked })}/>Show Correct Answers <br/>
          <input defaultValue={quizSettings.accessCode} type="text" onChange={(e) => setSettings({ ...quizSettings, accessCode: e.target.value })}/>Access Code <br/>
