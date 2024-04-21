@@ -13,10 +13,17 @@ export default function Signin() {
     navigate("/Kanbas/Account/Profile");
   };
 
+  const [error, setError] = useState("")
+  
   const ifProfile = async() => {
-    const res = await client.profile();
+    let currUser = null;
 
-    if (res) 
+    try {
+      currUser = await client.profile();
+  } catch (err: any) {
+      setError(err.response.data.message);
+  }
+    if (currUser) 
       {
         navigate("/Kanbas/Account/Profile");
       }

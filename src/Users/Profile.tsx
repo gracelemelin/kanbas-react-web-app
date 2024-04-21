@@ -12,9 +12,20 @@ export default function Profile() {
   const save = async () => {
     await client.updateUser(profile);
   };
+
+  const [error, setError] = useState("")
+
   const fetchProfile = async () => {
-    const account = await client.profile();
-    setProfile(account);
+    let currUser = null;
+
+    try {
+      currUser = await client.profile();
+      setProfile(currUser);
+  } catch (err: any) {
+      setError(err.response.data.message);
+  }
+
+    
   };
 
   const signout = async () => {

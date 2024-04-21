@@ -207,9 +207,16 @@ function QuizPreview() {
     )
   }
 
+  const [error, setError] = useState("")
+
   const getUser = async () => {
-    const res = await client.profile();
-    setUser(res)
+
+    try {
+      const currUser = await client.profile();
+      setUser(currUser)
+  } catch (err: any) {
+      setError(err.response.data.message);
+  }
   }
 
   useEffect(() => {

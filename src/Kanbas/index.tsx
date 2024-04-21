@@ -11,8 +11,12 @@ import * as client from "../Users/client"
 
 const API_BASE = process.env.REACT_APP_API_BASE;
 
+axios.defaults.withCredentials = true;
+
 function Kanbas() {
   const { pathname } = useLocation();
+
+  const [error, setError] = useState("");
 
   const [mycourses, setCourses] = useState<any[]>([]);
   const COURSES_API = `${API_BASE}/api/courses`;
@@ -51,7 +55,13 @@ function Kanbas() {
   };
 
   const findAllCourses = async () => {
-    const currUser = await client.profile();
+    let currUser = null;
+
+    try {
+      currUser = await client.profile();
+  } catch (err: any) {
+      setError(err.response.data.message);
+  }
 
     const response = await axios.get(COURSES_API);
     let courses = response.data
