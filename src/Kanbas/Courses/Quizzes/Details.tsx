@@ -121,7 +121,7 @@ function Details() {
                         <tr>
                             <td className="tg-0pky">Time Limit</td>
                             <td>   </td>
-                            <td>{settings.timeLimit.bool ? settings.timeLimit : "None"}</td>
+                            <td>{settings.timeLimit.exists ? settings.timeLimit.time : "None"}</td>
                         </tr>
                         <tr>
                             <td className="tg-0pky">Multiple Attempts</td>

@@ -133,7 +133,7 @@ function QuizDetailsEditor() {
          Options <br/>
          <input defaultChecked={quizSettings.shuffleAnswers} type="checkbox" onChange={(e) => setSettings({ ...quizSettings, shuffleAnswers: e.target.checked })}/>Shuffle Answers <br/>
          <input defaultChecked={quizSettings.multipleAttempts} type="checkbox"onChange={(e) => setSettings({ ...quizSettings, multipleAttempts:  e.target.checked })}/> Allow Multiple Attempts <br/>
-         <input className="mb-2" type="checkbox" defaultChecked={quizSettings.timeLimit.boolean} onChange={(e) => setSettings({ ...quizSettings, timeLimit: {...quizSettings.timeLimit, boolean : e.target.checked}})}/> 
+         <input className="mb-2" type="checkbox" defaultChecked={quizSettings.timeLimit.exists} onChange={(e) => setSettings({ ...quizSettings, timeLimit: {...quizSettings.timeLimit, exists : e.target.checked}})}/> 
          Time Limit &nbsp;<input type="Number" min={0} max={240} defaultValue={quizSettings.timeLimit.time} onChange={(e) => setSettings({ ...quizSettings, timeLimit: {...quizSettings.timeLimit, time : e.target.value}})}/> Minutes
          <br/>
          <input defaultChecked={quizSettings.showCorrectAnswers} type="checkbox" onChange={(e) => setSettings({ ...quizSettings, showCorrectAnswers: e.target.checked })}/>Show Correct Answers <br/>
