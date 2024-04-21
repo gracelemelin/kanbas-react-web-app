@@ -52,7 +52,6 @@ function Kanbas() {
 
   const findAllCourses = async () => {
     const currUser = await client.profile();
-    console.log(currUser)
 
     const response = await axios.get(COURSES_API);
     let courses = response.data
