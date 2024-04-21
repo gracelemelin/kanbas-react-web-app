@@ -6,7 +6,7 @@ import * as client from "../../../Users/client";
 
 function QuizPreview() {
 
-  const [time, setTime] = useState(new Date().getTime().toString())
+  const [time, setTime] = useState(new Date(Number(new Date())))
 
   const {courseId, qid} = useParams();
 
@@ -166,10 +166,13 @@ function QuizPreview() {
   const allAtOnce = () => {
     return (
       <div>
+        Quiz Started: {String(time)} <br />
         {questions.map((q, i) => (
-          <div>
-            Question {i + 1}
-            Points {q.points}
+          <div className="questionPreview">
+            <div className="previewHeader">
+              Question {i + 1} &nbsp;
+              Points {q.points}
+            </div>
             {q.question}
             {q.type === "trueFalse" ? previewQuestionsTF(q) : previewQuestionsMCB(q)}
           </div>
@@ -182,16 +185,14 @@ function QuizPreview() {
   const oneAtATime = () => {
     const tempqs = questions.filter((_, index) => index === i);
 
-    
-
     return (
       <div style={{height : "50%", width : "50hx"}}>        
         {tempqs.map((q) => (
-          <div>
+          <div className="questionPreview">
             <div>
-              Quiz Started: {time} <br />
-                <div style={{backgroundColor: "lightgray"}}>
-                Question {i + 1}
+              Quiz Started: {String(time)} <br />
+                <div className="previewHeader">
+                Question {i + 1} &nbsp;
                 Points {q.points} <br />
                 </div>
                 {q.question}
@@ -220,13 +221,13 @@ function QuizPreview() {
 
   return (
     <div className="mt-4">
-      <div>
+      <div className="questionPreviewMain">
       {settings.oneQuestionAtATime ? oneAtATime() : allAtOnce()}
       
-      <Link to={`/Kanbas/Courses/${courseId}/Quizzes/${qid}/Details`}><button>Submit Quiz</button></Link> 
-      <Link to={`/Kanbas/Courses/${courseId}/Quizzes/${qid}/Edit/Details`}><button>Keep Editing This Quiz</button></Link> 
+      <Link to={`/Kanbas/Courses/${courseId}/Quizzes/${qid}/Details`}><button className="me-2" style={{borderRadius: "4px", backgroundColor: "red", color: "white"}}>Submit Quiz</button></Link> 
+      <Link to={`/Kanbas/Courses/${courseId}/Quizzes/${qid}/Edit/Details`}><button style={{borderRadius: "4px"}}>Keep Editing This Quiz</button></Link> 
       </div>
-      <div className="Questions_List" style={{float: "right"}}>
+      <div className="Questions_List">
       Questions
       <ul>{
         questions.map((q, ii) => (

@@ -89,6 +89,16 @@ function Details() {
                 <table>
                     <tbody>
                         <tr>
+                            <td className="tg-0pky">Quiz Title</td>
+                            <td>   </td>
+                            <td>{quiz.title}</td>
+                        </tr>
+                        <tr>
+                            <td className="tg-0pky">Quiz Description</td>
+                            <td>   </td>
+                            <td>{settings.description}</td>
+                        </tr>
+                        <tr>
                             <td className="tg-0pky">Quiz Type</td>
                             <td>   </td>
                             <td>{settings.quizType}</td>
@@ -146,17 +156,17 @@ function Details() {
                         <tr>
                             <td className="tg-0pky">Due Date</td>
                             <td>   </td>
-                            <td>{settings.dueDate}</td>
+                            <td>{String(settings.dueDate).substring(0, String(settings.dueDate).indexOf('T'))}</td>
                         </tr>
                         <tr>
                             <td className="tg-0pky">Available Date</td>
                             <td>   </td>
-                            <td>{settings.availableDate}</td>
+                            <td>{String(settings.availableDate).substring(0, String(settings.dueDate).indexOf('T'))}</td>
                         </tr>
                         <tr>
                             <td className="tg-0pky">Until Date</td>
                             <td>   </td>
-                            <td>{settings.untilDate}</td>
+                            <td>{String(settings.untilDate).substring(0, String(settings.dueDate).indexOf('T'))}</td>
                         </tr>
                     </tbody>
                 </table>

@@ -149,8 +149,8 @@ function QuestionTypes(props: { question: any; updateQuestion: any; deleteQuesti
              : 
             
              <div className="questionDisplay" style={{backgroundColor: "lightgray"}}>
-             Question Type: {tempQuestion.type} <br/>
-             Question Title: {tempQuestion.title}<br/>
+             Question Type: {tempQuestion.type} &nbsp;
+             Question Title: {tempQuestion.title} &nbsp;
              Points:{tempQuestion.points}
              <hr/>
              {tempQuestion.question}

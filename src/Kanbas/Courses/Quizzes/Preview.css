@@ -1,3 +1,35 @@
 .bold {
     color: red;
 }
+
+.questionPreview {
+    margin-bottom: 50px;
+}
+
+.questionPreviewMain {
+    width: 80%;
+    float: left;
+}
+
+.Questions_List {
+    float: right;
+    vertical-align: top;
+}
+
+.previewHeader {
+    background-color: lightgray;
+}
+
+/* .btn {
+    border-radius: 4px;
+}
+
+.submit {
+    background-color: red;
+    color: white;
+}
+
+.edit {
+    background-color: gray;
+    color: white
+} */

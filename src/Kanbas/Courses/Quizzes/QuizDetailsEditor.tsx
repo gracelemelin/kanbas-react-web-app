@@ -6,6 +6,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import { setQuiz2, setQuizSettings2 } from "./reducer";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import Calendar from 'react-calendar'
 
 function QuizDetailsEditor() {
     
@@ -64,7 +65,7 @@ function QuizDetailsEditor() {
       navigate(`/Kanbas/Courses/${courseId}/Quizzes`);
     };
 
-    const gettDateForInput = (date: Date) => {
+    const gettDateForInput = (date: any) => {
 
         const dateObj = new Date(date);
         ////////////////////////////
@@ -141,11 +142,11 @@ function QuizDetailsEditor() {
          <input defaultChecked={quizSettings.lockQuestionsAfterAnswering} type="checkbox" onChange={(e) => setSettings({ ...quizSettings, lockQuestionsAfterAnswering: e.target.checked })}/>Lock Questions After Answering<br/>
          <div>
           Due <br/>
-          <input value={gettDateForInput(quizSettings.dueDate)} type="date" onChange={(e) => setSettings({ ...quizSettings, dueDate: e.target.value })}/><br/>
+          <input defaultValue={String(quizSettings.dueDate).substring(0, String(quizSettings.dueDate).indexOf('T'))} type="date" onChange={(e) => setSettings({ ...quizSettings, dueDate: e.target.valueAsDate })}/><br/>
           Available From <br/>
-          <input value={quizSettings.availableDate} type="date"onChange={(e) => setSettings({ ...quizSettings, availableDate:  e.target.value })} /><br/>
+          <input defaultValue={String(quizSettings.availableDate).substring(0, String(quizSettings.availableDate).indexOf('T'))} type="date" onChange={(e) => setSettings({ ...quizSettings, availableDate:  e.target.valueAsDate })} /><br/>
           Until <br/>
-          <input className="mb-2" value={quizSettings.untilDate} type="date"onChange={(e) => setSettings({ ...quizSettings, untilDate:  e.target.value })}/><br/>
+          <input className="mb-2" defaultValue={String(quizSettings.untilDate).substring(0, String(quizSettings.untilDate).indexOf('T'))} type="date" onChange={(e : any) => setSettings({ ...quizSettings, untilDate: e.target.valueAsDate })} /> <br/>
          </div>
          <Link to={`/Kanbas/Courses/${courseId}/Quizzes`}><button className="mb-2 me-2" style={{borderRadius: "4px"}}>Cancel</button></Link>
          <button style={{borderRadius: "4px"}} className="mb-2 me-1" onClick={handleSaveAndPublish}>Save & Publish</button>

@@ -66,6 +66,7 @@ function Quizzes() {
         await findCourseQuizzes()
     }
 
+    
     return (
         <div className="ps-1 pe-2 pt-2"
             style={{ left: "200px", top: "50px" }}>
@@ -88,7 +89,7 @@ function Quizzes() {
                                 <FaEllipsisV className="me-2" />
                                 <Link
                                     to={`${q[0].id}/Details`}>{q[0].title}</Link><br/>
-                                {q[1].dueDate}{q[1].availableDate}{q[1].points}{q[0].numQuestions}
+                                Due Date: {q[1].dueDate.substring(0, q[1].dueDate.indexOf('T'))}&nbsp;&nbsp;&nbsp;Available Date: {q[1].availableDate.substring(0, q[1].availableDate.indexOf('T'))}&nbsp;&nbsp;&nbsp;Points: {q[1].points}&nbsp;&nbsp;&nbsp;Number of Questions: {q[0].numQuestions}
                                 <span className="float-end">
                                     <button onClick={() => updateQuizPublish(q[0].id)}>{q[0].published ? <FaCheckCircle style={{ color: "green" }} /> : <FcCancel />}</button>
                                     <button className="btn dropdown-toggle ms-1"
